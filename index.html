@@ -295,6 +295,7 @@
             flex: 1;
             position: relative;
             overflow: hidden;
+            z-index: 1;
         }
 
         #map {
@@ -534,6 +535,7 @@
             width: 100%;
             border-collapse: collapse;
             table-layout: fixed;
+            text-align: center;
         }
 
         .data-table th {
@@ -579,7 +581,7 @@
 
         .mode-indicator {
             position: fixed;
-            top: 2rem;
+            top: 6rem;
             right: 2rem;
             padding: 1.25rem 1.75rem;
             background: var(--glass-bg);
@@ -597,8 +599,9 @@
         }
 
         .mode-indicator.active {
-            opacity: 1;
+            opacity: 0.8;
             transform: translateY(0);
+            z-index: 1;
         }
 
         .mode-indicator i {
@@ -786,7 +789,7 @@
             }
 
             .mode-indicator {
-                top: 5rem;
+                top: 8rem;
                 right: 1rem;
                 left: 1rem;
                 text-align: center;
@@ -861,6 +864,73 @@
             border: none;
             color: white;
             text-align: center;
+        }
+        
+        .leaflet-control-attribution {
+            display: block !important;
+            background: var(--glass-bg) !important;
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--glass-border) !important;
+            border-radius: 12px !important;
+            padding: 8px 12px !important;
+            color: var(--text-primary) !important;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin: 10px; 
+        }
+
+        .leaflet-control-layers-toggle{
+            background: var(--glass-bg);
+        }
+
+        .layer-toggle-btn {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--glass-border);
+            border-radius: 16px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: url('https://i.ibb.co/tph7z8sq/icons8-cursor-24.png'), auto;
+            z-index: 1100; 
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-xl);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: auto; 
+            user-select: none; 
+        }
+
+        .layer-toggle-btn:hover {
+            background: var(--surface-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg), 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .layer-toggle-btn:active {
+            transform: translateY(0) scale(0.95); 
+        }
+
+        .layer-toggle-btn i, .layer-toggle-btn span {
+            pointer-events: none; 
+        }
+
+        .layer-toggle-btn i {
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .layer-toggle-btn {
+                top: 5rem;
+                right: 1rem;
+                padding: 0.75rem 1.25rem;
+                font-size: 0.9rem;
+            }
         }
 
         /* Loading Animation */
@@ -1007,6 +1077,9 @@
 
         <div class="main-content">
             <div id="map"></div>
+            <button class="layer-toggle-btn" id="layerToggleBtn" title="Alternar Mapa" onclick="toggleMapLayer(event)">
+                <i class="fas fa-globe"></i> <span>Satélite</span>
+            </button>
         </div>
     </div>
 
@@ -1070,36 +1143,70 @@
 
             map = L.map('map', {
                 zoomControl: false,
-                attributionControl: false
-            }).setView([-23.5505, -46.6333], 10);
+                attributionControl: true
+            }).setView([-23.5505, -46.6333], 4);
 
-            // Add zoom control with custom position
             L.control.zoom({
                 position: 'bottomright'
             }).addTo(map);
 
-            // Add scale control
             L.control.scale({
                 position: 'bottomleft',
                 metric: true,
                 imperial: false
             }).addTo(map);
 
-            // Dark theme tile layer
-            const tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                attribution: '©OpenStreetMap, ©CartoDB',
+            const satelliteLayer = L.tileLayer('https://mt{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+                    attribution: 'Map data &copy; <a href="https://www.google.com/maps">Google</a>',
+                    subdomains: ['0', '1', '2', '3'],
+                    maxZoom: 20 
+                });
+
+            const darkLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
                 subdomains: 'abcd',
                 maxZoom: 19
             });
 
-            tileLayer.addTo(map);
+            satelliteLayer.addTo(map);
+
+            window.mapLayers = {
+                satellite: satelliteLayer,
+                dark: darkLayer,
+                current: 'satellite'
+            };
 
             previewLayer = L.layerGroup().addTo(map);
 
-            // Map event handlers
             map.on('click', handleMapClick);
         }
 
+        // Toggle map layers
+        function toggleMapLayer(event) {
+            event.stopPropagation(); // Impede que o clique seja propagado para o mapa
+            try {
+                const toggleBtn = document.getElementById('layerToggleBtn');
+                if (!toggleBtn || !window.mapLayers) return;
+
+                // Alternar entre satélite e tema escuro
+                if (window.mapLayers.current === 'satellite') {
+                    map.removeLayer(window.mapLayers.satellite);
+                    window.mapLayers.dark.addTo(map);
+                    window.mapLayers.current = 'dark';
+                    toggleBtn.innerHTML = '<i class="fas fa-map"></i> <span>Tema Escuro</span>';
+                    showToast('Mapa alterado para Tema Escuro', 'info');
+                } else {
+                    map.removeLayer(window.mapLayers.dark);
+                    window.mapLayers.satellite.addTo(map);
+                    window.mapLayers.current = 'satellite';
+                    toggleBtn.innerHTML = '<i class="fas fa-globe"></i> <span>Satélite</span>';
+                    showToast('Mapa alterado para Satélite', 'info');
+                }
+            } catch (error) {
+                console.error('Error toggling map layer:', error);
+                showToast('Erro ao alternar mapa', 'error');
+            }
+        }
         // Handle map clicks based on current mode
         function handleMapClick(e) {
             if (!e || !e.latlng) return;
@@ -2373,6 +2480,10 @@
                         case 's':
                             e.preventDefault();
                             exportData();
+                            break;
+                        case 'm':
+                            e.preventDefault();
+                            toggleMapLayer(e); 
                             break;
                     }
                 } else if (e.key === 'Escape') {
