@@ -48,6 +48,9 @@
         cursor: url("https://i.ibb.co/tph7z8sq/icons8-cursor-24.png") 12 12, auto; /* mão fechada / ícone */
         }
 
+        .leaflet-interactive {
+        cursor: url("https://i.ibb.co/tph7z8sq/icons8-cursor-24.png") 12 12, auto; /* linha / ícone */ 
+        }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -1613,7 +1616,7 @@
                     case 'add':
                         indicator.innerHTML = '<i class="fas fa-plus"></i> Adicionar';
                         indicator.className = 'mode-indicator active';
-                        if (map) map.getContainer().style.cursor = 'crosshair';
+                        // if (map) map.getContainer().style.cursor = 'none';
                         showToast('Clique no mapa para adicionar', 'info');
                         break;
                         
@@ -1639,7 +1642,7 @@
                     case 'connect':
                         indicator.innerHTML = '<i class="fas fa-link"></i> Conectar';
                         indicator.className = 'mode-indicator active';
-                        if (map) map.getContainer().style.cursor = 'copy';
+                        // if (map) map.getContainer().style.cursor = 'copy';
                         showToast('Selecione marcadores para conectar', 'info', 5000);
                         // Setup select handlers
                         Object.values(points).forEach(point => {
