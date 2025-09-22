@@ -1237,13 +1237,19 @@
         }
 
         // Create popup content
-        function createPopupContent(pointData) {
+        function createPopupContent(point) {
             return `
                 <div style="font-family: Inter, sans-serif; min-width: 200px;">
-                    <h3 style="margin: 0 0 12px 0; color: #3B82F6; font-size: 16px; font-weight: 700;">${pointData.name}</h3>
-                    <p style="margin: 0 0 12px 0; font-size: 14px; color: #64748B; line-height: 1.4;">${pointData.description || 'Sem descrição'}</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <h3 style="margin: 0; color: #3B82F6; font-size: 16px; font-weight: 700;">${point.name}</h3>
+                        <div style="display: flex; gap: 12px;">
+                            <i class="fas fa-edit" style="color: #F59E0B; cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto;" onclick="editPoint(${point.id})"></i>
+                            <i class="fas fa-trash" style="color: #EF4444; cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto;" onclick="deletePoint(${point.id})"></i>
+                        </div>
+                    </div>
+                    <p style="margin: 0 0 12px 0; font-size: 14px; color: #64748B; line-height: 1.4;">${point.description || 'Sem descrição'}</p>
                     <small style="font-size: 12px; color: #94A3B8; font-family: monospace; background: rgba(0,0,0,0.2); padding: 4px 8px; border-radius: 6px; display: inline-block;">
-                        ${pointData.lat.toFixed(6)}, ${pointData.lng.toFixed(6)}
+                        ${point.lat.toFixed(6)}, ${point.lng.toFixed(6)}
                     </small>
                 </div>
             `;
@@ -1299,10 +1305,6 @@
                 const name = nameInput.value.trim() || `Ponto ${pointIdCounter}`;
                 const description = descInput.value.trim() || '';
 
-                const pointData = {name, description, lat, lng};
-
-                const popupContent = createPopupContent(pointData);
-
                 const point = {
                     id: pointIdCounter++,
                     name: name,
@@ -1310,15 +1312,17 @@
                     lat: lat,
                     lng: lng,
                     marker: null,
-                    popupContent: popupContent,
+                    popupContent: null,
                     selectHandler: null,
                     removeHandler: null
                 };
 
+                point.popupContent = createPopupContent(point);
+
                 const customIcon = createMarkerIcon(point.id);
 
                 point.marker = L.marker([lat, lng], { icon: customIcon })
-                    .bindPopup(popupContent, {
+                    .bindPopup(point.popupContent, {
                         maxWidth: 300,
                         className: 'custom-popup'
                     })
@@ -2047,7 +2051,7 @@
         function updatePointPopup(id) {
             try {
                 const point = points[id];
-                if (!point || !point.marker) return;
+                if (!point) return;
 
                 point.popupContent = createPopupContent(point);
 
@@ -2055,6 +2059,11 @@
                     maxWidth: 300,
                     className: 'custom-popup'
                 });
+
+                const popup = point.marker.getPopup();
+                if (popup && popup.isOpen()) {
+                    popup.setContent(point.popupContent);
+                }
             } catch (error) {
                 console.error('Error updating point popup:', error);
             }
@@ -2190,10 +2199,6 @@
                                 const description = values[4] || '';
 
                                 if (!isNaN(lat) && !isNaN(lng) && Math.abs(lat) <= 90 && Math.abs(lng) <= 180) {
-                                    const pointData = {name, description, lat, lng};
-
-                                    const popupContent = createPopupContent(pointData);
-
                                     const point = {
                                         id: id,
                                         name: name,
@@ -2201,15 +2206,17 @@
                                         lat: lat,
                                         lng: lng,
                                         marker: null,
-                                        popupContent: popupContent,
+                                        popupContent: null,
                                         selectHandler: null,
                                         removeHandler: null
                                     };
 
+                                    point.popupContent = createPopupContent(point);
+
                                     const customIcon = createMarkerIcon(point.id);
 
                                     point.marker = L.marker([lat, lng], { icon: customIcon })
-                                        .bindPopup(popupContent, {
+                                        .bindPopup(point.popupContent, {
                                             maxWidth: 300,
                                             className: 'custom-popup'
                                         })
@@ -2375,9 +2382,6 @@
 
                 for (let id in savedPoints) {
                     const p = savedPoints[id];
-                    const pointData = {name: p.name, description: p.description, lat: p.lat, lng: p.lng};
-                    const popupContent = createPopupContent(pointData);
-
                     const point = {
                         id: p.id,
                         name: p.name,
@@ -2385,15 +2389,17 @@
                         lat: p.lat,
                         lng: p.lng,
                         marker: null,
-                        popupContent: popupContent,
+                        popupContent: null,
                         selectHandler: null,
                         removeHandler: null
                     };
 
+                    point.popupContent = createPopupContent(point);
+
                     const customIcon = createMarkerIcon(point.id);
 
                     point.marker = L.marker([point.lat, point.lng], { icon: customIcon })
-                        .bindPopup(popupContent, {
+                        .bindPopup(point.popupContent, {
                             maxWidth: 300,
                             className: 'custom-popup'
                         })
@@ -2518,6 +2524,55 @@
             } catch (error) {
                 console.error('Error handling resize:', error);
             }
+        }
+
+        // New functions for popup edit and delete
+        function deletePoint(id) {
+            removePoint(id);
+        }
+
+        function editPoint(id) {
+            const point = points[id];
+            if (!point || !point.marker) return;
+
+            const editContent = `
+                <div style="font-family: Inter, sans-serif; min-width: 200px;">
+                    <input id="edit-name-${id}" type="text" value="${point.name}" style="width: 100%; padding: 8px; margin-bottom: 12px; border: 2px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text-primary); font-family: inherit;">
+                    <textarea id="edit-desc-${id}" style="width: 100%; padding: 8px; margin-bottom: 12px; border: 2px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text-primary); font-family: inherit; min-height: 60px;">${point.description}</textarea>
+                    <small style="font-size: 12px; color: #94A3B8; font-family: monospace; background: rgba(0,0,0,0.2); padding: 4px 8px; border-radius: 6px; display: inline-block; margin-bottom: 12px;">
+                        ${point.lat.toFixed(6)}, ${point.lng.toFixed(6)}
+                    </small>
+                    <div style="display: flex; justify-content: flex-end; gap: 8px;">
+                        <button style="padding: 6px 12px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 6px; cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto; font-weight: 600;" onclick="saveEdit(${id})">Salvar</button>
+                        <button style="padding: 6px 12px; background: var(--surface-light); color: var(--text-primary); border: none; border-radius: 6px; cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto; font-weight: 600;" onclick="cancelEdit(${id})">Cancelar</button>
+                    </div>
+                </div>
+            `;
+
+            point.marker.getPopup().setContent(editContent);
+        }
+
+        function saveEdit(id) {
+            const point = points[id];
+            if (!point) return;
+
+            const nameInput = document.getElementById(`edit-name-${id}`);
+            const descInput = document.getElementById(`edit-desc-${id}`);
+
+            if (nameInput && descInput) {
+                point.name = nameInput.value.trim() || `Ponto ${id}`;
+                point.description = descInput.value.trim();
+
+                updatePointPopup(id);
+                updatePointList();
+                updateTable();
+                saveData();
+                showToast('Ponto atualizado!', 'success');
+            }
+        }
+
+        function cancelEdit(id) {
+            updatePointPopup(id);
         }
 
         // Initialize application when DOM is ready
