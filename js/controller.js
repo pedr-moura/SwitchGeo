@@ -256,14 +256,17 @@ class MappingController {
     }
 
     toggleAddMode() {
+        toggleSidebar()
         this.setMode(this.model.currentMode === 'add' ? 'normal' : 'add');
     }
 
     toggleRemoveMode() {
+        toggleSidebar()
         this.setMode(this.model.currentMode === 'remove' ? 'normal' : 'remove');
     }
 
     toggleConnectMode() {
+        toggleSidebar()
         const oldMode = this.model.currentMode;
         this.setMode(oldMode === 'connect' ? 'normal' : 'connect');
         console.log(this.model.currentMode);
@@ -274,6 +277,7 @@ class MappingController {
     }
 
     toggleDisconnectMode() {
+        toggleSidebar()
         const oldMode = this.model.currentMode;
         this.setMode(oldMode === 'disconnect' ? 'normal' : 'disconnect');
         console.log(this.model.currentMode);
