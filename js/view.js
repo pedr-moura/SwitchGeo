@@ -291,17 +291,29 @@ class MappingView {
 
                 if ((this.model.currentMode === 'connect' && exists) || (this.model.currentMode === 'disconnect' && !exists)) continue;
 
-                const style = this.model.currentMode === 'connect' ? {
-                    color: '#10B981', // --success
-                    weight: 3,
-                    opacity: 0.7,
-                    dashArray: '5, 5'
-                } : {
-                    color: '#EF4444', // --danger
-                    weight: 5,
-                    opacity: 0.8,
-                    dashArray: 'none'
-                };
+                let style;
+                if (this.model.currentMode === 'connect') {
+                    style = {
+                        color: '#10B981', // Verde para conectar
+                        weight: 3,
+                        opacity: 0.7,
+                        dashArray: '5, 5'
+                    };
+                } else if (this.model.currentMode === 'disconnect') {
+                    style = {
+                        color: '#EF4444', // Vermelho para desconectar
+                        weight: 5,
+                        opacity: 0.8,
+                        dashArray: 'none'
+                    };
+                } else if (this.model.currentMode === 'normal') {
+                    style = {
+                        color: 'none',
+                        weight: 5,
+                        opacity: 0.2,
+                        dashArray: 'none'
+                    };
+                }
 
                 L.polyline([[fromPoint.lat, fromPoint.lng], [toPoint.lat, toPoint.lng]], style).addTo(this.previewLayer);
             }
