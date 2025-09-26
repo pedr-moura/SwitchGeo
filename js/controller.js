@@ -199,15 +199,22 @@ class MappingController {
             for (let j = i + 1; j < this.model.selectedPoints.length; j++) {
                 const from = this.model.selectedPoints[i];
                 const to = this.model.selectedPoints[j];
-                if (this.model.removeConnection(from, to)) {
-                    const conn = { from, to }; // Não precisa do objeto real, só para remover polyline
+                
+                const connIndex = this.model.connections.findIndex(c =>
+                    (c.from === from && c.to === to) || (c.from === to && c.to === from)
+                );
+                
+                if (connIndex !== -1) {
+                    const conn = this.model.connections[connIndex];
                     this.view.removePolyline(conn);
+                    this.model.connections.splice(connIndex, 1);
                     connectionsRemoved++;
                 }
             }
         }
 
         if (connectionsRemoved > 0) {
+            this.model.saveData();
             showToast(`${connectionsRemoved} conexões removidas!`, 'success');
         } else {
             showToast('Nenhuma conexão encontrada', 'info');
