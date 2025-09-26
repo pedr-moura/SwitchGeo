@@ -281,9 +281,9 @@ class MappingController {
             showToast('Nenhuma conexão encontrada', 'info');
         }
         console.log(connectionsRemoved);
-        toggleDisconnectMode()
+        // toggleDisconnectMode()
         this.model.clearSelection();
-        this.model.setMode('normal');
+        // this.model.setMode('normal');
         this.view.updateModeIndicator();
         this.updateAllViews();
     }
