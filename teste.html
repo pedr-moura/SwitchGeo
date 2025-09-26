@@ -772,8 +772,17 @@
                 z-index: 1000;
             }
 
+        .sidebar-header {
+            padding: 2rem;
+            background: linear-gradient(360deg, #00000000 0%, var(--surface-light) 100%);
+            position: relative;
+            overflow: hidden;
+            border: none;
+        }
+    
             .sidebar.open {
                 transform: translateX(0);
+                background: none;
             }
 
             .mobile-menu-btn {
@@ -1014,7 +1023,7 @@
                         </div>
                     </div>
 
-                    <div class="form-section">
+                    <div class="form-section" style="display: none;">
                         <div class="form-title">
                             <i class="fas fa-map-pin"></i>
                             Novo Ponto
@@ -1042,7 +1051,7 @@
                         </div>
                     </div>
 
-                    <div class="form-section">
+                    <div class="form-section" style="display: none;">
                         <div class="form-title">
                             <i class="fas fa-list"></i>
                             Pontos
