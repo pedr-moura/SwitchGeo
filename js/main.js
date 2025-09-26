@@ -15,7 +15,7 @@ function init() {
         window.exportData = controller.exportData.bind(controller);
         window.importData = controller.importData.bind(controller);
         window.switchTab = controller.switchTab.bind(controller);
-        window.toggleMapLayer = controller.view.toggleMapLayer.bind(controller.view);
+        // window.toggleMapLayer = controller.view.toggleMapLayer.bind(controller.view);
         window.toggleSidebar = controller.toggleSidebar.bind(controller);
         window.clearSelection = () => {
             controller.model.clearSelection();
