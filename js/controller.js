@@ -125,6 +125,11 @@ class MappingController {
     }
 
     togglePointSelection(id) {
+        
+        console.log('selecionando: '+id)
+
+        if (this.model.currentMode !== 'normal') {
+        
         this.model.togglePointSelection(id);
         const isSelected = this.model.selectedPoints.includes(id);
         this.view.updateMarkerIcon(id, isSelected);
@@ -139,6 +144,8 @@ class MappingController {
                 }
             }, 600);
         }
+        }
+        
     }
 
     togglePointSelectionFromList(id, event) {
