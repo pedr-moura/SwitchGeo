@@ -5,6 +5,16 @@ class MappingController {
         this.initHandlers();
     }
 
+    deselectAll() {
+        Object.values(this.model.points).forEach(point => {
+            const id = point.id;
+            if (this.model.selectedPoints.includes(id)) {
+                this.view.updateMarkerIcon(id, false);
+            }
+        });
+        this.model.clearSelection();
+    }
+
     initHandlers() {
         this.view.map.on('click', this.handleMapClick.bind(this));
         document.addEventListener('keydown', this.handleKeyboardShortcuts.bind(this));
@@ -125,8 +135,8 @@ class MappingController {
     }
 
     togglePointSelection(id) {
-        
-        console.log('selecionando: '+id)
+
+        console.log('selecionando: '+id+', modo: '+ this.model.currentMode)
 
         if (this.model.currentMode !== 'normal') {
         
@@ -177,7 +187,7 @@ class MappingController {
             showToast('Já conectados', 'info');
         }
 
-        this.model.clearSelection();
+        this.deselectAll();
         this.model.setMode('normal');
         this.view.updateModeIndicator();
         this.updateAllViews();
@@ -203,7 +213,7 @@ class MappingController {
             showToast('Nenhuma conexão encontrada', 'info');
         }
 
-        this.model.clearSelection();
+        this.deselectAll();
         this.model.setMode('normal');
         this.view.updateModeIndicator();
         this.updateAllViews();
@@ -252,7 +262,7 @@ class MappingController {
         console.log(this.model.currentMode);
         
         if (this.model.currentMode == 'disconnect') {
-            this.model.clearSelection();
+            this.deselectAll();
         }
     }
 
@@ -261,38 +271,8 @@ class MappingController {
         this.setMode(oldMode === 'disconnect' ? 'normal' : 'disconnect');
         console.log(this.model.currentMode);
         if (oldMode !== 'disconnect') {
-            this.model.clearSelection();
+            this.deselectAll();
         }
-    }
-
-    disconnectSelectedPoints() {
-        let connectionsRemoved = 0;
-        
-        for (let i = 0; i < this.model.selectedPoints.length - 1; i++) {
-            for (let j = i + 1; j < this.model.selectedPoints.length; j++) {
-                const from = this.model.selectedPoints[i];
-                const to = this.model.selectedPoints[j];
-                const conn = this.model.connections.find(c =>
-                    (c.from === from && c.to === to) || (c.from === to && c.to === from)
-                );
-                if (conn && this.model.removeConnection(from, to)) {
-                    this.view.removePolyline(conn);
-                    connectionsRemoved++;
-                }
-            }
-        }
-
-        if (connectionsRemoved > 0) {
-            showToast(`${connectionsRemoved} conexões removidas!`, 'success');
-        } else {
-            showToast('Nenhuma conexão encontrada', 'info');
-        }
-        console.log(connectionsRemoved);
-        // toggleDisconnectMode()
-        this.model.clearSelection();
-        // this.model.setMode('normal');
-        this.view.updateModeIndicator();
-        this.updateAllViews();
     }
 
     updatePointFromTable(cell) {
