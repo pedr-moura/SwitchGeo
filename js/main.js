@@ -8,6 +8,23 @@ function init() {
         view = new MappingView(model);
         controller = new MappingController(model, view);
 
+        window.toggleAddMode = controller.toggleAddMode.bind(controller);
+        window.toggleRemoveMode = controller.toggleRemoveMode.bind(controller);
+        window.toggleConnectMode = controller.toggleConnectMode.bind(controller);
+        window.toggleDisconnectMode = controller.toggleDisconnectMode.bind(controller);
+        window.exportData = controller.exportData.bind(controller);
+        window.importData = controller.importData.bind(controller);
+        window.switchTab = controller.switchTab.bind(controller);
+        window.toggleMapLayer = controller.view.toggleMapLayer.bind(controller.view);
+        window.toggleSidebar = controller.toggleSidebar.bind(controller);
+        window.clearSelection = () => {
+            controller.model.clearSelection();
+            controller.model.selectedPoints.forEach(id => {
+                controller.view.updateMarkerIcon(id, false);
+            });
+            controller.updateAllViews();
+        };
+
         // Renderizar pontos e conexões carregados
         Object.values(model.points).forEach(point => {
             view.renderPoint(point);

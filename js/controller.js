@@ -240,11 +240,52 @@ class MappingController {
     }
 
     toggleConnectMode() {
-        this.setMode(this.model.currentMode === 'connect' ? 'normal' : 'connect');
+        const oldMode = this.model.currentMode;
+        this.setMode(oldMode === 'connect' ? 'normal' : 'connect');
+        console.log(this.model.currentMode);
+        
+        if (this.model.currentMode == 'disconnect') {
+            this.model.clearSelection();
+        }
     }
 
     toggleDisconnectMode() {
-        this.setMode(this.model.currentMode === 'disconnect' ? 'normal' : 'disconnect');
+        const oldMode = this.model.currentMode;
+        this.setMode(oldMode === 'disconnect' ? 'normal' : 'disconnect');
+        console.log(this.model.currentMode);
+        if (oldMode !== 'disconnect') {
+            this.model.clearSelection();
+        }
+    }
+
+    disconnectSelectedPoints() {
+        let connectionsRemoved = 0;
+        
+        for (let i = 0; i < this.model.selectedPoints.length - 1; i++) {
+            for (let j = i + 1; j < this.model.selectedPoints.length; j++) {
+                const from = this.model.selectedPoints[i];
+                const to = this.model.selectedPoints[j];
+                const conn = this.model.connections.find(c =>
+                    (c.from === from && c.to === to) || (c.from === to && c.to === from)
+                );
+                if (conn && this.model.removeConnection(from, to)) {
+                    this.view.removePolyline(conn);
+                    connectionsRemoved++;
+                }
+            }
+        }
+
+        if (connectionsRemoved > 0) {
+            showToast(`${connectionsRemoved} conexões removidas!`, 'success');
+        } else {
+            showToast('Nenhuma conexão encontrada', 'info');
+        }
+        console.log(connectionsRemoved);
+        toggleDisconnectMode()
+        this.model.clearSelection();
+        this.model.setMode('normal');
+        this.view.updateModeIndicator();
+        this.updateAllViews();
     }
 
     updatePointFromTable(cell) {

@@ -92,3 +92,37 @@ function parseCSVLine(line) {
     result.push(current);
     return result;
 }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('open');
+            }
+        }
+function switchTab(tabId, event) {
+    try {
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.classList.remove('active');
+        });
+
+        document.querySelectorAll('.tab-button').forEach(btn => {
+            btn.classList.remove('active');
+        });
+
+        const targetTab = document.getElementById(tabId);
+        if (targetTab) {
+            targetTab.classList.add('active');
+        }
+        
+        if (event && event.target) {
+            event.target.classList.add('active');
+        }
+
+        if (tabId === 'table-tab') {
+            updateTable();
+        }
+
+    } catch (error) {
+        console.error('Error switching tabs:', error);
+    }
+}
