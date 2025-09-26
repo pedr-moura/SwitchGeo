@@ -4,6 +4,9 @@ class MappingView {
         this.map = null;
         this.previewLayer = null;
         this.mapLayers = null;
+        this.locationMarker = null; // Marcador de GPS
+        this.accuracyCircle = null; // Círculo de precisão
+        this.isLocating = false; // Flag para toggle
         this.initMap();
         this.initUIElements();
     }
@@ -42,6 +45,10 @@ class MappingView {
         };
 
         this.previewLayer = L.layerGroup().addTo(this.map);
+
+        // Adicionar listeners para eventos de localização
+        this.map.on('locationfound', this.onLocationFound.bind(this));
+        this.map.on('locationerror', this.onLocationError.bind(this));
     }
 
     initUIElements() {
@@ -423,5 +430,67 @@ class MappingView {
                 point.marker.bindPopup(point.popupContent, { maxWidth: 300, className: 'custom-popup' });
             }
         });
+    }
+
+    toggleGPS() {
+        if (this.isLocating) {
+            this.map.stopLocate();
+            if (this.locationMarker) {
+                this.map.removeLayer(this.locationMarker);
+                this.locationMarker = null;
+            }
+            if (this.accuracyCircle) {
+                this.map.removeLayer(this.accuracyCircle);
+                this.accuracyCircle = null;
+            }
+            this.isLocating = false;
+            showToast('Rastreamento GPS desativado', 'info');
+            document.getElementById('gpsBtn').innerHTML = '<i class="fas fa-location-crosshairs"></i> Rastrear GPS'; // Atualiza texto do botão
+        } else {
+            this.map.locate({
+                watch: true, // Ativa rastreamento contínuo
+                enableHighAccuracy: true, // Usa GPS para mais precisão
+                maxZoom: 16, // Limite de zoom
+                timeout: 10000 // Timeout para erro
+            });
+            this.isLocating = true;
+            showToast('Rastreamento GPS ativado', 'success');
+            document.getElementById('gpsBtn').innerHTML = '<i class="fas fa-location-crosshairs"></i> Parar GPS'; // Atualiza texto do botão
+        }
+    }
+
+    onLocationFound(e) {
+        const radius = e.accuracy/10; 
+
+        if (!this.locationMarker) {
+            this.locationMarker = L.circleMarker(e.latlng, {
+                radius: 8,
+                fillColor: '#3388ff', // Azul clássico de GPS
+                color: '#ffffff',
+                weight: 2,
+                fillOpacity: 0.8
+            }).addTo(this.map)
+            .bindPopup('Sua localização atual<br>Precisão: ' + Math.round(e.accuracy/10) + ' metros');
+        } else {
+            this.locationMarker.setLatLng(e.latlng);
+        }
+
+        if (!this.accuracyCircle) {
+            this.accuracyCircle = L.circle(e.latlng, {
+                radius: radius,
+                weight: 1,
+                color: '#3388ff',
+                fillColor: '#3388ff',
+                fillOpacity: 0.15
+            }).addTo(this.map);
+        } else {
+            this.accuracyCircle.setLatLng(e.latlng);
+            this.accuracyCircle.setRadius(radius);
+        }
+    }
+
+    onLocationError(e) {
+        showToast('Erro no GPS: ' + e.message, 'error');
+        this.toggleGPS(); // Desativa se houver erro persistente
     }
 }

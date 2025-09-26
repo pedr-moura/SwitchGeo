@@ -25,6 +25,11 @@ class MappingController {
             this.view.toggleMapLayer();
         });
 
+        const gpsBtn = document.getElementById('gpsBtn');
+        if (gpsBtn) {
+            gpsBtn.addEventListener('click', this.toggleGPS.bind(this));
+        }
+
         // Outros botões: add, remove, connect, disconnect, export, import, clear
         // Exemplo: document.getElementById('addBtn').addEventListener('click', this.toggleAddMode.bind(this));
         // Para import: document.getElementById('importInput').addEventListener('change', this.importData.bind(this));
@@ -256,17 +261,17 @@ class MappingController {
     }
 
     toggleAddMode() {
-        toggleSidebar()
+        this.toggleSidebar()
         this.setMode(this.model.currentMode === 'add' ? 'normal' : 'add');
     }
 
     toggleRemoveMode() {
-        toggleSidebar()
+        this.toggleSidebar()
         this.setMode(this.model.currentMode === 'remove' ? 'normal' : 'remove');
     }
 
     toggleConnectMode() {
-        toggleSidebar()
+        this.toggleSidebar()
         const oldMode = this.model.currentMode;
         this.setMode(oldMode === 'connect' ? 'normal' : 'connect');
         console.log(this.model.currentMode);
@@ -277,7 +282,7 @@ class MappingController {
     }
 
     toggleDisconnectMode() {
-        toggleSidebar()
+        this.toggleSidebar()
         const oldMode = this.model.currentMode;
         this.setMode(oldMode === 'disconnect' ? 'normal' : 'disconnect');
         console.log(this.model.currentMode);
@@ -524,5 +529,9 @@ class MappingController {
         this.view.updateTable();
         this.view.updateSelectionControls();
         this.view.updatePreviews();
+    }
+
+    toggleGPS() {
+        this.view.toggleGPS();
     }
 }

@@ -883,11 +883,20 @@
         .leaflet-control-layers-toggle{
             background: var(--glass-bg);
         }
+        
+        .map-button{
+            position: absolute;
+            display: flex;
+            height: fit-content;
+            width: fit-content;
+            top: 2rem;
+            right: 0rem;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.5rem;
+        }
 
         .layer-toggle-btn {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
             padding: 1rem 1.5rem;
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -1078,9 +1087,15 @@
 
         <div class="main-content">
             <div id="map"></div>
-            <button class="layer-toggle-btn" id="layerToggleBtn" title="Alternar Mapa" onclick="toggleMapLayer()">
-                <i class="fas fa-globe"></i> <span>Satélite</span>
-            </button>
+            <div class="map-button">
+                <button class="layer-toggle-btn" id="layerToggleBtn" title="Alternar Mapa" onclick="toggleMapLayer()">
+                    <i class="fas fa-globe"></i> <span>Satélite</span>
+                </button>
+                
+                <button class="layer-toggle-btn" id="gpsBtn" class="btn">
+                    <i class="fas fa-location-crosshairs"></i> Rastrear GPS
+                </button>
+            </div>
         </div>
     </div>
 
