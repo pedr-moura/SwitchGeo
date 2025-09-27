@@ -30,6 +30,7 @@
             padding: 0;
             box-sizing: border-box;
             cursor: default;
+            outline: none;
         }
 
         #map.leaflet-grab {
@@ -109,6 +110,24 @@
             height: 3px;
             background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
             animation: shimmer 3s ease-in;
+        }
+
+        .filter-table{
+            width: 100%;
+            padding: 1rem;
+            border-radius: 1rem;
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            gap: 1rem;
+            display: flex;
+            input{
+                width: 100%;
+                background: none;
+                border: none;
+                color: var(--text-primary);
+            }
         }
 
         @keyframes shimmer {
@@ -920,7 +939,7 @@
             border: 2px solid var(--glass-border);
 
             span{
-                padding-bottom: 0.5rem;
+                padding-bottom: 1rem;
                 text-align: center;
                 position: relative;
                 font-size: 1.2rem;

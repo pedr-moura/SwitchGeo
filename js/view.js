@@ -60,6 +60,35 @@ class MappingView {
         this.selectionCount = document.getElementById('selectionCount');
         this.pointCountEl = document.getElementById('point-count');
         this.connectionCountEl = document.getElementById('connection-count');
+        this.tableFilter = document.getElementById('tableFilter');
+        if (this.tableFilter) {
+            this.tableFilter.addEventListener('input', this.filterTable.bind(this));
+        }
+    }
+
+    filterTable() {
+        try {
+            const filterValue = this.tableFilter.value.toLowerCase().trim();
+            const rows = this.tableBody.querySelectorAll('tr');
+
+            rows.forEach(row => {
+                if (row.classList.contains('empty-state')) return; // Ignora mensagem de estado vazio
+
+                const cells = row.querySelectorAll('td');
+                let matches = false;
+
+                cells.forEach(cell => {
+                    const text = cell.textContent.toLowerCase();
+                    if (text.includes(filterValue)) {
+                        matches = true;
+                    }
+                });
+
+                row.style.display = matches || !filterValue ? '' : 'none';
+            });
+        } catch (error) {
+            console.error('Error filtering table:', error);
+        }
     }
 
     renderPoint(point, isSelected = false) {
@@ -209,11 +238,12 @@ class MappingView {
             Object.values(this.model.points).forEach(point => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td contenteditable="true" data-field="name" data-id="${point.id}">${point.name}</td>
-                    <td contenteditable="true" data-field="lat" data-id="${point.id}">${point.lat.toFixed(2)}</td>
-                    <td contenteditable="true" data-field="lng" data-id="${point.id}">${point.lng.toFixed(2)}</td>
-                    <td contenteditable="true" data-field="description" data-id="${point.id}">${point.description || ''}</td>
+                    <td contenteditable="false" data-field="name" data-id="${point.id}">${point.name}</td>
+                    <td contenteditable="false" data-field="description" data-id="${point.id}">${point.description || ''}</td>
                 `;
+                    // <td contenteditable="false" data-field="lat" data-id="${point.id}">${point.lat.toFixed(2)}</td>
+                    // <td contenteditable="false" data-field="lng" data-id="${point.id}">${point.lng.toFixed(2)}</td>
+
                 row.onclick = () => this.focusOnPoint(point.id);
                 this.tableBody.appendChild(row);
 
@@ -243,6 +273,8 @@ class MappingView {
         } catch (error) {
             console.error('Error updating table:', error);
         }
+
+        this.filterTable();
     }
 
     updateStats() {
