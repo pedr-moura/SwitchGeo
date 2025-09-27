@@ -23,24 +23,24 @@
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto;
+            cursor: default;
         }
 
         #map.leaflet-grab {
-        cursor: url("https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png") 12 12, auto; /* mão aberta / ícone */
+        cursor: default; /* mão aberta / ícone */
         }
 
         #map.leaflet-grabbing {
-        cursor: url("https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png") 12 12, auto; /* mão fechada / ícone */
+        cursor: default; /* mão fechada / ícone */
         }
 
         .leaflet-interactive {
-        cursor: url("https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png") 12 12, auto; /* linha / ícone */ 
+        cursor: default; /* linha / ícone */ 
         }
 
         body {
@@ -144,7 +144,7 @@
             background: transparent;
             border: none;
             color: var(--text-secondary);
-            cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto;
+            cursor: default;
             border-radius: 12px;
             font-weight: 600;
             font-size: 0.95rem;
@@ -181,7 +181,7 @@
             padding: 1rem;
             border: none;
             border-radius: 12px;
-            cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto;
+            cursor: default;
             font-size: 0.9rem;
             font-weight: 600;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -431,7 +431,7 @@
             padding: 1.25rem;
             border-radius: 16px;
             border: 2px solid var(--glass-border);
-            cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto;
+            cursor: default;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -473,7 +473,7 @@
             height: 20px;
             border: 2px solid var(--border);
             border-radius: 6px;
-            cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto;
+            cursor: default;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
@@ -556,7 +556,7 @@
 
         /* .data-table tr:hover {
             background: var(--surface-light);
-            cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto;
+            cursor: default;
         } */
 
         .data-table td[contenteditable="true"]:focus {
@@ -621,7 +621,7 @@
             height: 56px;
             border-radius: 16px;
             font-size: 1.25rem;
-            cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto;
+            cursor: default;
             box-shadow: var(--shadow-xl);
             transition: all 0.3s ease;
         }
@@ -680,7 +680,7 @@
             padding: 0.5rem 1rem;
             border: none;
             border-radius: 8px;
-            cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto;
+            cursor: default;
             font-size: 0.85rem;
             font-weight: 600;
             transition: all 0.3s ease;
@@ -914,7 +914,7 @@
             color: var(--text-primary);
             font-size: 1rem;
             font-weight: 600;
-            cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto;
+            cursor: default;
             z-index: 1100; 
             display: flex;
             align-items: center;
