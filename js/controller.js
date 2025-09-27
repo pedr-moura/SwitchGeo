@@ -114,7 +114,9 @@ class MappingController {
             </div>
         `;
 
-        point.marker.getPopup().setContent(editContent);
+        setTimeout( function () {
+            point.marker.getPopup().setContent(editContent);
+        }, 0);
     }
 
     saveEdit(id) {
