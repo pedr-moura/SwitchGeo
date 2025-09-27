@@ -179,6 +179,7 @@
         }
 
         .action-btn {
+            width: 4rem;
             padding: 1rem;
             border: none;
             border-radius: 12px;
@@ -576,6 +577,7 @@
             position: relative;
             /* top: 6rem;
             right: 2rem; */
+            width: 4rem;
             padding: 1.25rem 1.75rem;
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -597,7 +599,7 @@
             opacity: 1;
             transform: translateY(0);
             z-index: 1100;
-            width: fit-content;
+            width: 4rem;
             color: var(--primary);
             border: 2px solid var(--primary);
             padding: 0.75rem 1.25rem;
@@ -791,7 +793,7 @@
             }
 
             .action-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
             }
 
             .stats-grid {
@@ -898,12 +900,17 @@
             position: absolute;
             display: flex;
             height: fit-content;
-            width: fit-content;
             top: 2rem;
             right: 1rem;
             flex-direction: column;
-            align-items: flex-end;
             gap: 0.5rem;
+
+            .map-button-command{
+                z-index: 1100;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.5rem;
+            }
         }
 
         .layer-toggle-btn {
@@ -917,6 +924,8 @@
             font-weight: 600;
             cursor: default;
             z-index: 1100; 
+            width: 4rem;
+            height: 3rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;

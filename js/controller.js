@@ -108,8 +108,8 @@ class MappingController {
                     ${point.lat.toFixed(6)}, ${point.lng.toFixed(6)}
                 </small>
                 <div style="display: flex; justify-content: flex-end; gap: 8px;">
-                    <button style="padding: 6px 12px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 6px; cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto; font-weight: 600;" onclick="controller.saveEdit(${id})">Salvar</button>
-                    <button style="padding: 6px 12px; background: var(--surface-light); color: var(--text-primary); border: none; border-radius: 6px; cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto; font-weight: 600;" onclick="controller.cancelEdit(${id})">Cancelar</button>
+                    <button style="padding: 6px 12px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border: none; border-radius: 6px; cursor: default; font-weight: 600;" onclick="controller.saveEdit(${id})">Salvar</button>
+                    <button style="padding: 6px 12px; background: var(--surface-light); color: var(--text-primary); border: none; border-radius: 6px; cursor: default; font-weight: 600;" onclick="controller.cancelEdit(${id})">Cancelar</button>
                 </div>
             </div>
         `;

@@ -118,22 +118,8 @@
         <div class="main-content">
             <div id="map"></div>
             <div class="map-button">
-                <button class="layer-toggle-btn" id="layerToggleBtn" title="Alternar Mapa" onclick="toggleMapLayer()">
-                    <i class="fas fa-globe"></i> 
-                    <!-- <span>Satélite</span> -->
-                </button>
-                
-                <button class="layer-toggle-btn" id="gpsBtn" class="btn">
-                    <i class="fas fa-location-crosshairs"></i> 
-                    <!-- Rastrear GPS -->
-                </button>
 
-                <div class="mode-indicator" id="modeIndicator">
-                    <i class="fas fa-mouse-pointer"></i>
-                    Normal
-                </div>
-
-                <div class="action-grid">
+                                <div class="action-grid">
                     <button class="action-btn btn-primary" onclick="toggleAddMode()" title="Adicionar">
                         <i class="fas fa-plus"></i>
                     </button>
@@ -152,6 +138,23 @@
                     <label class="action-btn btn-success" for="importFile" title="Importar">
                         <i class="fas fa-upload"></i>
                     </label>
+                </div>
+
+                <div class="map-button-command">
+                    <button class="layer-toggle-btn" id="layerToggleBtn" title="Alternar Mapa" onclick="toggleMapLayer()">
+                        <i class="fas fa-globe"></i> 
+                        <!-- <span>Satélite</span> -->
+                    </button>
+                    
+                    <button class="layer-toggle-btn" id="gpsBtn" class="btn">
+                        <i class="fas fa-location-crosshairs"></i> 
+                        <!-- Rastrear GPS -->
+                    </button>
+
+                    <div class="mode-indicator" id="modeIndicator">
+                        <i class="fas fa-mouse-pointer"></i>
+                        Normal
+                    </div>
                 </div>
             </div>
         </div>

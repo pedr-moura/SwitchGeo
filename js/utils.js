@@ -17,8 +17,8 @@ function createPopupContent(point) {
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <h3 style="margin: 0; color: #3B82F6; font-size: 16px; font-weight: 700;">${point.name}</h3>
                 <div style="display: flex; gap: 12px;">
-                    <i class="fas fa-edit" style="color: #F59E0B; cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto;" onclick="editPoint(${point.id})"></i>
-                    <i class="fas fa-trash" style="color: var(--danger); cursor: url('https://i.ibb.co/LXmQ0XGv/icons8-cursor-24-1-removebg-preview.png'), auto;" onclick="deletePoint(${point.id})"></i>
+                    <i class="fas fa-edit" style="color: #F59E0B; cursor: default;" onclick="editPoint(${point.id})"></i>
+                    <i class="fas fa-trash" style="color: var(--danger); cursor: default;" onclick="deletePoint(${point.id})"></i>
                 </div>
             </div>
             <p style="margin: 0 0 12px 0; font-size: 14px; color: #64748B; line-height: 1.4;">${point.description || 'Sem descrição'}</p>

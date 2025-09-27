@@ -360,7 +360,7 @@ class MappingView {
                 showToast('Selecione marcadores para desconectar', 'info', 5000);
                 break;
             default:
-                html = '<i class="fas fa-mouse-pointer"></i> Normal';
+                html = '<i class="fas fa-mouse-pointer"></i>';
                 cursor = '';
                 break;
         }
