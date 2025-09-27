@@ -261,17 +261,17 @@ class MappingController {
     }
 
     toggleAddMode() {
-        this.toggleSidebar()
+        //this.toggleSidebar()
         this.setMode(this.model.currentMode === 'add' ? 'normal' : 'add');
     }
 
     toggleRemoveMode() {
-        this.toggleSidebar()
+        //this.toggleSidebar()
         this.setMode(this.model.currentMode === 'remove' ? 'normal' : 'remove');
     }
 
     toggleConnectMode() {
-        this.toggleSidebar()
+        //this.toggleSidebar()
         const oldMode = this.model.currentMode;
         this.setMode(oldMode === 'connect' ? 'normal' : 'connect');
         console.log(this.model.currentMode);
@@ -282,7 +282,7 @@ class MappingController {
     }
 
     toggleDisconnectMode() {
-        this.toggleSidebar()
+        //this.toggleSidebar()
         const oldMode = this.model.currentMode;
         this.setMode(oldMode === 'disconnect' ? 'normal' : 'disconnect');
         console.log(this.model.currentMode);

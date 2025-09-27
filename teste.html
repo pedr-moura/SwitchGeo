@@ -27,26 +27,7 @@
                     </button>
                 </div>
                 
-                <div class="action-grid">
-                    <button class="action-btn btn-primary" onclick="toggleAddMode()" title="Adicionar">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                    <button class="action-btn btn-danger" onclick="toggleRemoveMode()" title="Remover">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button class="action-btn btn-warning" onclick="toggleConnectMode()" title="Conectar">
-                        <i class="fas fa-link"></i>
-                    </button>
-                    <button class="action-btn btn-danger" onclick="toggleDisconnectMode()" title="Desconectar">
-                        <i class="fas fa-unlink"></i>
-                    </button>
-                    <button class="action-btn btn-success" onclick="exportData()" title="Exportar">
-                        <i class="fas fa-download"></i>
-                    </button>
-                    <label class="action-btn btn-success" for="importFile" title="Importar">
-                        <i class="fas fa-upload"></i>
-                    </label>
-                </div>
+                
                 <input type="file" id="importFile" class="file-input" accept=".csv" onchange="importData(event)">
             </div>
 
@@ -150,6 +131,27 @@
                 <div class="mode-indicator" id="modeIndicator">
                     <i class="fas fa-mouse-pointer"></i>
                     Normal
+                </div>
+
+                <div class="action-grid">
+                    <button class="action-btn btn-primary" onclick="toggleAddMode()" title="Adicionar">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="action-btn btn-danger" onclick="toggleRemoveMode()" title="Remover">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="action-btn btn-warning" onclick="toggleConnectMode()" title="Conectar">
+                        <i class="fas fa-link"></i>
+                    </button>
+                    <button class="action-btn btn-danger" onclick="toggleDisconnectMode()" title="Desconectar">
+                        <i class="fas fa-unlink"></i>
+                    </button>
+                    <button class="action-btn btn-success" onclick="exportData()" title="Exportar">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <label class="action-btn btn-success" for="importFile" title="Importar">
+                        <i class="fas fa-upload"></i>
+                    </label>
                 </div>
             </div>
         </div>
