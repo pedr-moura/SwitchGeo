@@ -140,42 +140,43 @@
             <div class="map-button liquid-glass">
                     <span>Ações</span>
 
-                    <div class="action-grid">
-                    <button class="action-btn btn-primary" onclick="toggleAddMode()" title="Adicionar">
+                    <div class="action-grid hide-action-grid" id="grid-action">
+                    <button class="action-btn btn-primary"  onclick="toggleAddMode()" title="Adicionar">
                         <i class="fas fa-plus"></i>
                     </button>
-                    <button class="action-btn btn-warning" onclick="toggleConnectMode()" title="Conectar">
+                    <button class="action-btn btn-warning"  onclick="toggleConnectMode()" title="Conectar">
                         <i class="fas fa-link"></i>
                     </button>
-                    <button class="action-btn btn-success" onclick="exportData()" title="Exportar">
+                    <button class="action-btn btn-success"  onclick="exportData()" title="Exportar">
                         <i class="fas fa-download"></i>
                     </button>
-                    <button class="action-btn btn-danger" onclick="toggleRemoveMode()" title="Remover">
+                    <button class="action-btn btn-danger"  onclick="toggleRemoveMode()" title="Remover">
                         <i class="fas fa-minus"></i>
                     </button>
-                    <button class="action-btn btn-danger" onclick="toggleDisconnectMode()" title="Desconectar">
+                    <button class="action-btn btn-danger"  onclick="toggleDisconnectMode()" title="Desconectar">
                         <i class="fas fa-unlink"></i>
                     </button>
-                    <label class="action-btn btn-success" for="importFile" title="Importar">
+                    <label class="action-btn btn-success"  for="importFile" title="Importar">
                         <i class="fas fa-upload"></i>
                     </label>
                 </div>
 
                 <div class="map-button-command">
+
                     <button class="layer-toggle-btn" id="layerToggleBtn" title="Alternar Mapa" onclick="toggleMapLayer()">
                         <i class="fas fa-globe"></i> 
                         <!-- <span>Satélite</span> -->
                     </button>
+
+                    <div class="mode-indicator" id="modeIndicator" onclick="view.toggleClassesFromIdExact('grid-action', 'hide-action-grid', 'show-action-grid')">
+                        <i class="fas fa-mouse-pointer"></i>
+                    </div>
                     
                     <button class="layer-toggle-btn" id="gpsBtn" class="btn">
                         <i class="fas fa-location-crosshairs"></i> 
                         <!-- Rastrear GPS -->
                     </button>
 
-                    <div class="mode-indicator" id="modeIndicator">
-                        <i class="fas fa-mouse-pointer"></i>
-                        Normal
-                    </div>
                 </div>
             </div>
         </div>
