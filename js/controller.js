@@ -137,6 +137,7 @@ class MappingController {
 
     cancelEdit(id) {
         this.view.updatePointPopup(id);
+        this.view.map.closePopup();
     }
 
     togglePointSelection(id) {
