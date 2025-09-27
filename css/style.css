@@ -16,6 +16,7 @@
             --success: hsl(160, 84%, 39%);
             --warning: hsl(38, 92%, 50%);
             --danger: hsla(0, 84%, 60%);
+            --glass: hsla(0, 0%, 0%, 0.4);
             --glass-bg: #1e293bc2;
             --glass-border: rgba(71, 85, 105, 0.3);
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -145,7 +146,7 @@
             border: none;
             color: var(--text-secondary);
             cursor: default;
-            border-radius: 12px;
+            border-radius: 1rem;
             font-weight: 600;
             font-size: 0.95rem;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -182,7 +183,7 @@
             width: 4rem;
             padding: 1rem;
             border: none;
-            border-radius: 12px;
+            border-radius: 1rem;
             cursor: default;
             font-size: 0.9rem;
             font-weight: 600;
@@ -391,7 +392,7 @@
             padding: 1rem 1.25rem;
             background: var(--surface);
             border: 2px solid var(--border);
-            border-radius: 12px;
+            border-radius: 1rem;
             color: var(--text-primary);
             font-size: 0.95rem;
             transition: all 0.3s ease;
@@ -578,17 +579,17 @@
             /* top: 6rem;
             right: 2rem; */
             width: 4rem;
-            padding: 1.25rem 1.75rem;
+            /* padding: 1.25rem 1.75rem; */
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 2px solid var(--glass-border);
             color: var(--text-primary);
-            border-radius: 16px;
+            border-radius: 1rem;
             font-size: 1rem;
             font-weight: 600;
             z-index: 1100;
             opacity: 0;
-            transform: translateY(-20px);
+            transform: translateX(-20px);
             transition: all 0.3s ease;
             box-shadow: var(--shadow-xl);
         }
@@ -725,7 +726,7 @@
 
         .toast {
             position: fixed;
-            bottom: 2rem;
+            top: 6rem;
             right: 2rem;
             padding: 1.25rem 1.75rem;
             background: var(--glass-bg);
@@ -823,17 +824,20 @@
 
         .leaflet-popup-content-wrapper {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
             border: 2px solid var(--glass-border);
-            color: var(--text-primary);
             border-radius: 16px;
             box-shadow: var(--shadow-xl);
+            backdrop-filter: blur(15px) saturate(250%) grayscale(90%) contrast(200%);
+
+            p{
+                color: var(--text-primary) !important;
+            }
         }
 
         .leaflet-popup-tip {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
             border: 2px solid var(--glass-border);
+            backdrop-filter: blur(3px) saturate(250%) grayscale(90%) contrast(200%);
         }
 
         .leaflet-control-zoom {
@@ -843,7 +847,7 @@
 
         .leaflet-control-zoom a {
             background: var(--glass-bg) !important;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(3px) saturate(250%) grayscale(90%) contrast(200%);
             border: 2px solid var(--glass-border) !important;
             color: var(--text-primary) !important;
             border-radius: 12px !important;
@@ -864,7 +868,7 @@
 
         .leaflet-control-scale {
             background: var(--glass-bg) !important;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(3px) saturate(250%) grayscale(90%) contrast(200%);
             border: 2px solid var(--glass-border) !important;
             border-radius: 12px !important;
             padding: 8px 12px !important;
@@ -882,7 +886,7 @@
         .leaflet-control-attribution {
             display: block !important;
             background: var(--glass-bg) !important;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(3px) saturate(250%) grayscale(90%) contrast(200%);
             border: 2px solid var(--glass-border) !important;
             border-radius: 12px !important;
             padding: 8px 12px !important;
@@ -896,16 +900,33 @@
             background: var(--glass-bg);
         }
         
+        .liquid-glass {
+            position: relative;
+            background: var(--glass-bg); 
+            backdrop-filter: blur(3px) saturate(250%) grayscale(90%) contrast(200%);
+        }
+
         .map-button{
             position: absolute;
             display: flex;
             height: fit-content;
-            top: 2rem;
-            right: 1rem;
+            bottom: 3.5rem;
+            left: 50%;
+            transform: translate(-50%, 0px);
             flex-direction: column;
-            gap: 0.5rem;
+            z-index: 1100;
+            padding: 1rem;
+            border-radius: 1rem;
+            border: 2px solid var(--glass-border);
 
+            span{
+                padding-bottom: 0.5rem;
+                text-align: center;
+                position: relative;
+                font-size: 1.2rem;
+            }
             .map-button-command{
+                padding-top: 0.5rem;
                 z-index: 1100;
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
@@ -918,7 +939,7 @@
             background: var(--glass-bg);
             backdrop-filter: blur(2px);
             border: 2px solid var(--glass-border);
-            border-radius: 16px;
+            border-radius: 1rem;
             color: var(--text-primary);
             font-size: 1rem;
             font-weight: 600;
@@ -928,6 +949,7 @@
             height: 3rem;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
             box-shadow: var(--shadow-xl);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
