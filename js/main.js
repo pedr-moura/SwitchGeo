@@ -1,6 +1,7 @@
 let model;
 let view;
 let controller;
+let maxId
 
 function init() {
     try {

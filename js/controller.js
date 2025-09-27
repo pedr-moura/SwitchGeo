@@ -35,6 +35,18 @@ class MappingController {
         // Para import: document.getElementById('importInput').addEventListener('change', this.importData.bind(this));
     }
 
+    editNewPoint(){
+        const points = model.points;
+        const keys = Object.keys(points);           // ['1', '12', '13', ..., '30']
+        const lastKey = keys[keys.length - 1];      // pega a última chave
+        const maxPoint = points[lastKey];           // ponto com maior ID
+        maxId = maxPoint.id;
+
+        setTimeout( function () {
+            this.editPoint(maxId)
+            model.points[maxId].marker.openPopup();
+        }, 0);
+    }
     handleMapClick(e) {
         if (!e || !e.latlng) return;
         const lat = e.latlng.lat;
@@ -78,6 +90,7 @@ class MappingController {
             showToast('Ponto adicionado!', 'success');
             this.model.setMode('normal');
             this.view.updateModeIndicator();
+            this.editNewPoint()
         }
     }
 
@@ -135,6 +148,7 @@ class MappingController {
             this.view.updateTable();
             showToast('Ponto atualizado!', 'success');
         }
+        this.view.map.closePopup();
     }
 
     cancelEdit(id) {
