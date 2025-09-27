@@ -563,6 +563,7 @@
             position: sticky;
             top: 0;
             z-index: 10;
+            width: 100%;
         }
 
         .data-table td {
@@ -848,8 +849,9 @@
             box-shadow: var(--shadow-xl);
             backdrop-filter: blur(15px) saturate(250%) grayscale(90%) contrast(200%);
 
-            p{
+            p {
                 color: var(--text-primary) !important;
+                overflow-wrap: anywhere;
             }
         }
 

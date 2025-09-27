@@ -116,7 +116,7 @@ class MappingController {
         const editContent = `
             <div style="font-family: Inter, sans-serif; min-width: 200px;">
                 <input id="edit-name-${id}" type="text" value="${point.name}" style="width: 100%; padding: 8px; margin-bottom: 12px; border: 2px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text-primary); font-family: inherit;">
-                <textarea id="edit-desc-${id}" style="width: 100%; padding: 8px; margin-bottom: 12px; border: 2px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text-primary); font-family: inherit; min-height: 60px;">${point.description}</textarea>
+                <textarea maxlength="120" id="edit-desc-${id}" style="width: 100%; padding: 8px; margin-bottom: 12px; border: 2px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--text-primary); font-family: inherit; min-height: 60px;">${point.description}</textarea>
                 <small style="font-size: 12px; color: #94A3B8; font-family: monospace; background: rgba(0,0,0,0.2); padding: 4px 8px; border-radius: 6px; display: inline-block; margin-bottom: 12px;">
                     ${point.lat.toFixed(6)}, ${point.lng.toFixed(6)}
                 </small>
