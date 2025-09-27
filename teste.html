@@ -22,10 +22,10 @@
             --text-primary: #F1F5F9;
             --text-secondary: #CBD5E1;
             --text-muted: #94A3B8;
-            --success: #10B981;
-            --warning: #F59E0B;
-            --danger: #EF4444;
-            --glass-bg: rgba(30, 41, 59, 0.9);
+            --success: hsl(160, 84%, 39%);
+            --warning: hsl(38, 92%, 50%);
+            --danger: hsla(0, 84%, 60%);
+            --glass-bg: #1e293bc2;
             --glass-border: rgba(71, 85, 105, 0.3);
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -580,9 +580,9 @@
         }
 
         .mode-indicator {
-            position: fixed;
-            top: 6rem;
-            right: 2rem;
+            position: relative;
+            /* top: 6rem;
+            right: 2rem; */
             padding: 1.25rem 1.75rem;
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -591,7 +591,7 @@
             border-radius: 16px;
             font-size: 1rem;
             font-weight: 600;
-            z-index: 1000;
+            z-index: 1100;
             opacity: 0;
             transform: translateY(-20px);
             transition: all 0.3s ease;
@@ -599,9 +599,15 @@
         }
 
         .mode-indicator.active {
-            opacity: 0.8;
+            background: var(--glass-bg);
+            backdrop-filter: blur(2px);
+            opacity: 1;
             transform: translateY(0);
-            z-index: 1;
+            z-index: 1100;
+            width: fit-content;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.75rem 1.25rem;
         }
 
         .mode-indicator i {
@@ -614,7 +620,9 @@
             top: 2rem;
             left: 2rem;
             z-index: 1001;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            opacity: 1;
+            backdrop-filter: blur(2px);
+            background: linear-gradient(320deg, var(--glass-bg) 10%, var(--primary-dark));
             color: white;
             border: none;
             width: 56px;
@@ -774,7 +782,7 @@
 
         .sidebar-header {
             padding: 2rem;
-            background: linear-gradient(360deg, #00000000 0%, var(--surface-light) 100%);
+            background: linear-gradient(360deg, #00000000 0%, #00000000 50%,var(--surface-light) 60%);
             position: relative;
             overflow: hidden;
             border: none;
@@ -798,9 +806,9 @@
             }
 
             .mode-indicator {
-                top: 8rem;
+                /* top: 8rem;
                 right: 1rem;
-                left: 1rem;
+                left: 1rem; */
                 text-align: center;
                 z-index: 0;
             }
@@ -899,7 +907,7 @@
             height: fit-content;
             width: fit-content;
             top: 2rem;
-            right: 0rem;
+            right: 1rem;
             flex-direction: column;
             align-items: flex-end;
             gap: 0.5rem;
@@ -908,7 +916,7 @@
         .layer-toggle-btn {
             padding: 1rem 1.5rem;
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(2px);
             border: 2px solid var(--glass-border);
             border-radius: 16px;
             color: var(--text-primary);
@@ -1104,6 +1112,11 @@
                 <button class="layer-toggle-btn" id="gpsBtn" class="btn">
                     <i class="fas fa-location-crosshairs"></i> Rastrear GPS
                 </button>
+
+                <div class="mode-indicator" id="modeIndicator">
+                    <i class="fas fa-mouse-pointer"></i>
+                    Normal
+                </div>
             </div>
         </div>
     </div>
@@ -1111,11 +1124,6 @@
     <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()">
         <i class="fas fa-bars"></i>
     </button>
-
-    <div class="mode-indicator" id="modeIndicator">
-        <i class="fas fa-mouse-pointer"></i>
-        Normal
-    </div>
 
     <div class="toast" id="toast"></div>
 
