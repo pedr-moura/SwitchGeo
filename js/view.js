@@ -129,13 +129,13 @@ class MappingView {
                 this.map.removeLayer(this.mapLayers.satellite);
                 this.mapLayers.dark.addTo(this.map);
                 this.mapLayers.current = 'dark';
-                document.getElementById('layerToggleBtn').innerHTML = '<i class="fas fa-map"></i> <span>Tema Escuro</span>';
+                document.getElementById('layerToggleBtn').innerHTML = '<i class="fas fa-map"></i>';
                 showToast('Mapa alterado para Tema Escuro', 'info');
             } else {
                 this.map.removeLayer(this.mapLayers.dark);
                 this.mapLayers.satellite.addTo(this.map);
                 this.mapLayers.current = 'satellite';
-                document.getElementById('layerToggleBtn').innerHTML = '<i class="fas fa-globe"></i> <span>Satélite</span>';
+                document.getElementById('layerToggleBtn').innerHTML = '<i class="fas fa-globe"></i>';
                 showToast('Mapa alterado para Satélite', 'info');
             }
         } catch (error) {
@@ -336,25 +336,25 @@ class MappingView {
 
         switch (this.model.currentMode) {
             case 'add':
-                html = '<i class="fas fa-plus"></i> Adicionar';
+                html = '<i class="fas fa-plus"></i>';
                 className += ' active';
                 // cursor = 'none';
                 showToast('Clique no mapa para adicionar', 'info');
                 break;
             case 'remove':
-                html = '<i class="fas fa-trash-alt"></i> Remover';
+                html = '<i class="fas fa-trash-alt"></i>';
                 className += ' active';
                 cursor = 'not-allowed';
                 showToast('Clique em marcador para remover', 'info');
                 break;
             case 'connect':
-                html = '<i class="fas fa-link"></i> Conectar';
+                html = '<i class="fas fa-link"></i>';
                 className += ' active';
                 // cursor = 'copy';
                 showToast('Selecione marcadores para conectar', 'info', 5000);
                 break;
             case 'disconnect':
-                html = '<i class="fas fa-unlink"></i> Desconectar';
+                html = '<i class="fas fa-unlink"></i>';
                 className += ' active';
                 cursor = 'no-drop';
                 showToast('Selecione marcadores para desconectar', 'info', 5000);
@@ -445,7 +445,9 @@ class MappingView {
             }
             this.isLocating = false;
             showToast('Rastreamento GPS desativado', 'info');
-            document.getElementById('gpsBtn').innerHTML = '<i class="fas fa-location-crosshairs"></i> Rastrear GPS'; // Atualiza texto do botão
+            document.getElementById('gpsBtn').innerHTML = '<i class="fas fa-location-crosshairs"></i>'; 
+            document.getElementById('gpsBtn').style.color = 'var(--text-primary)'
+            document.getElementById('gpsBtn').style.animation = '';
         } else {
             this.map.locate({
                 watch: true, // Ativa rastreamento contínuo
@@ -455,7 +457,9 @@ class MappingView {
             });
             this.isLocating = true;
             showToast('Rastreamento GPS ativado', 'success');
-            document.getElementById('gpsBtn').innerHTML = '<i class="fas fa-location-crosshairs"></i> Parar GPS'; // Atualiza texto do botão
+            document.getElementById('gpsBtn').innerHTML = '<i class="fas fa-location-crosshairs"></i>'; 
+            document.getElementById('gpsBtn').style.color = 'var(--primary)'
+            document.getElementById('gpsBtn').style.animation = 'blink 2s infinite';
         }
     }
 
