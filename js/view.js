@@ -301,14 +301,14 @@ class MappingView {
                 let style;
                 if (this.model.currentMode === 'connect') {
                     style = {
-                        color: '#10B981', // Verde para conectar
+                        color: 'var(--success)', // Verde para conectar
                         weight: 3,
                         opacity: 0.7,
                         dashArray: '5, 5'
                     };
                 } else if (this.model.currentMode === 'disconnect') {
                     style = {
-                        color: '#EF4444', // Vermelho para desconectar
+                        color: 'var(--danger)', // Vermelho para desconectar
                         weight: 5,
                         opacity: 0.8,
                         dashArray: 'none'
