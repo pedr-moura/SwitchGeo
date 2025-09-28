@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SwitchGeo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="src/style/style.css">
 
 </head>
 <body>
@@ -163,12 +163,12 @@
 
                 <div class="map-button-command">
 
-                    <button class="layer-toggle-btn" id="layerToggleBtn" title="Alternar Mapa" onclick="toggleMapLayer()">
+                    <button class="layer-toggle-btn" id="layerToggleBtn" title="Alternar Mapa">
                         <i class="fas fa-globe"></i> 
                         <!-- <span>Satélite</span> -->
                     </button>
 
-                    <div class="mode-indicator" id="modeIndicator" onclick="view.toggleClassesFromIdExact('grid-action', 'hide-action-grid', 'show-action-grid')">
+                    <div class="mode-indicator" id="modeIndicator" onclick="controller.view.toggleClassesFromIdExact('grid-action', 'hide-action-grid', 'show-action-grid');">
                         <i class="fas fa-mouse-pointer"></i>
                     </div>
                     
@@ -189,11 +189,7 @@
     <div class="toast" id="toast"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="./js/utils.js"></script>
-<script src="./js/model.js"></script>
-<script src="./js/view.js"></script>
-<script src="./js/controller.js"></script>
-<script src="./js/main.js"></script>
+<script type="module" src="./src/main.js"></script>
 
 </body>
 </html>

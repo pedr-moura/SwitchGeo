@@ -981,8 +981,8 @@
         }
         
         .leaflet-control-attribution {
-            display: block !important;
-            background: var(--glass-bg) !important;
+            display: none;
+            /* background: var(--glass-bg) !important;
             backdrop-filter: blur(3px) saturate(250%) grayscale(90%) contrast(200%);
             border: 2px solid var(--glass-border) !important;
             border-radius: 12px !important;
@@ -990,7 +990,7 @@
             color: var(--text-primary) !important;
             font-size: 0.85rem;
             font-weight: 500;
-            margin: 10px; 
+            margin: 10px;  */
         }
 
         .leaflet-control-layers-toggle{
