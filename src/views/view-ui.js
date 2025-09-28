@@ -255,7 +255,7 @@ export function updateModeIndicator() {
             showToast('Selecione marcadores para desconectar', 'info', 5000);
             break;
         default:
-            html = '<i class="fas fa-mouse-pointer"></i>';
+            html = '<i class="fas fa-cube"></i>';
             cursor = '';
             break;
     }

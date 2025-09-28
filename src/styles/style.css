@@ -316,7 +316,7 @@
         .show-action-grid{
             transform: translate(-50%, -82%);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 2rem 10% 27% 10%;
+            padding: 1rem;
             background: linear-gradient(360deg, #00000000 0%, var(--background) 40%);
             border-radius: 2rem;
             width: fit-content;
@@ -861,7 +861,7 @@
         .toast.show {
             z-index: 2000;
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(-70px);
         }
 
         .toast.success {
@@ -950,6 +950,7 @@
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             padding: 1rem 1rem 1rem 1rem;
             background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
             backdrop-filter: blur(5px);
             border-radius: 2rem;
             width: fit-content;
