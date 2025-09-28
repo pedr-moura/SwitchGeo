@@ -197,6 +197,7 @@
             align-items: center;
             gap: 0.75rem;
             justify-content: center;
+            justify-content: space-between;
         }
 
         .sidebar-tabs {
@@ -244,20 +245,21 @@
         .data-actions{
             display: flex;
             gap: 1rem;
+            position: relative;
+            bottom: 3rem;
+            width: 100%;
             justify-content: center;
          }
-        
-        .btn-data{
-            z-index: 20000;
-        }
 
         .action-grid {
-            position: absolute;
+            position: relative;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 0.75rem;
             z-index: 1100;
-            bottom: 9rem;
+            bottom: 2rem;
+            left: 50%;
+            transform: translate(-50%,-50%);
         }
 
         .action-btn {
@@ -302,6 +304,24 @@
         .action-btn:active {
             transform: translateY(0);
         }
+        .hide-action-grid{
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            padding: 2rem 10% 0% 10%;
+            background: linear-gradient(360deg, #00000000 0%, var(--background) 40%);
+            opacity: 0;
+            width: fit-content;
+        }
+
+        .show-action-grid{
+            transform: translate(-50%, -82%);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 2rem 10% 27% 10%;
+            background: linear-gradient(360deg, #00000000 0%, var(--background) 40%);
+            border-radius: 2rem;
+            width: fit-content;
+            z-index: 1100;
+        }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -321,6 +341,15 @@
         .btn-warning {
             background: linear-gradient(135deg, var(--warning), #D97706);
             color: white;
+        }
+
+        .btn-data{
+            z-index: 20000;
+            width: -webkit-fill-available;
+            margin: 2rem;
+            font-size: 1rem;
+            display: flex;
+            gap: 1re 
         }
 
         .sidebar-content {
@@ -674,7 +703,7 @@
             border-radius: 1rem;
             font-size: 1rem;
             font-weight: 600;
-            z-index: 1100;
+            z-index: 2000;
             opacity: 1;
             transform: translateX(0px);
             transition: all 0.3s ease;
@@ -686,7 +715,6 @@
             backdrop-filter: blur(2px);
             opacity: 1;
             transform: translateY(0);
-            z-index: 1100;
             width: 4rem;
             color: var(--primary);
             border: 2px solid var(--primary);
@@ -699,10 +727,9 @@
 
         .mobile-menu-btn {
             display: none;
-            position: fixed;
-            top: 2rem;
-            left: 2rem;
-            z-index: 1001;
+            bottom: 6rem;
+            right: 2rem;
+            z-index: 3000;
             opacity: 1;
             backdrop-filter: blur(2px);
             background: var(--glass-bg);
@@ -822,12 +849,13 @@
             border-radius: 16px;
             color: var(--text-primary);
             font-weight: 600;
-            z-index: 1;
+            z-index: 0;
             opacity: 0;
             transform: translateY(100px);
             transition: all 0.3s ease;
             box-shadow: var(--shadow-xl);
             min-width: 300px;
+            transform: translateY(-500%);
         }
 
         .toast.show {
@@ -864,7 +892,7 @@
             .sidebar {
                 background: none;
                 width: 100vw;
-                transform: translateX(-100%);
+                transform: translateY(-100%);
                 position: fixed;
                 height: 100vh;
                 z-index: 1000;
@@ -880,7 +908,7 @@
             }
     
             .sidebar.open {
-                transform: translateX(0);
+                transform: translateY(0);
             }
 
             .mobile-menu-btn {
@@ -888,7 +916,7 @@
             }
 
             .action-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .stats-grid {
@@ -900,7 +928,6 @@
                 right: 1rem;
                 left: 1rem; */
                 text-align: center;
-                z-index: 0;
             }
 
             .toast {
@@ -908,20 +935,36 @@
                 left: 1rem;
                 min-width: auto;
             }
-        }
 
         .hide-action-grid{
-            transform: translateY(100%);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: absolute;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            padding: 2rem 10% 0% 10%;
+            background: linear-gradient(360deg, #00000000 0%, var(--background) 40%);
             opacity: 0;
-        }
+            width: fit-content;
+            }
 
         .show-action-grid{
-            transform: translateY(0%);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translate(-50%, -150%);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 1rem 1rem 1rem 1rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            border-radius: 2rem;
+            width: fit-content;
+            z-index: 1100;
+            }
         }
 
+        .grid-container{
+            position: absolute;
+            bottom: 2rem;
+            display: flex;
+            left: 50%;
+            transform: translate(-50%, 0%);
+            z-index: 1100;
+        }
         /* Custom Leaflet Styling */
         .leaflet-container {
             background: var(--background);
@@ -950,6 +993,9 @@
         .leaflet-control-zoom {
             border: none !important;
             box-shadow: var(--shadow-lg) !important;
+            position: relative;
+            top: 2rem;
+            height: 100dvh;
         }
 
         .leaflet-control-zoom a {
@@ -1025,6 +1071,9 @@
             padding: 1rem;
             border-radius: 1rem;
             border: 2px solid var(--glass-border);
+            align-items: center;
+            gap: 1rem;
+            
 
             span{
                 padding-bottom: 1rem;

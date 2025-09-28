@@ -14,8 +14,11 @@
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <h1 class="app-title">
-                     SwitchGeo
-                    <br> <br>
+                     SwitchGeo 
+                     
+                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" onclick="toggleSidebar()">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                    </svg>
                 </h1>
                 
                 <div class="sidebar-tabs">
@@ -26,15 +29,6 @@
                         <i class="fas fa-table"></i>
                     </button>
                 </div>              
-                    <div class="data-actions">
-                            <label class="action-btn btn-success btn-data" for="importFile" title="Importar">
-                                <i class="fas fa-upload"></i>
-                            </label>
-
-                            <button class="action-btn btn-success btn-data"  onclick="exportData()" title="Exportar">
-                                <i class="fas fa-download"></i>
-                            </button>
-                    </div>
                 
                 <input type="file" id="importFile" class="file-input" accept=".csv" onchange="importData(event)">
             </div>
@@ -136,52 +130,66 @@
                     </div>
                 </div>
             </div>
+
+            <div class="data-actions">
+                    <label class="action-btn btn-success btn-data" for="importFile" title="Importar">
+                        <i class="fas fa-upload"> </i><span>Import</span>
+                    </label>
+
+                    <button class="action-btn btn-success btn-data"  onclick="exportData()" title="Exportar">
+                        <i class="fas fa-download"> </i><span>Export</span>
+                    </button>
+            </div>
         </div>
 
         <div class="main-content">
             <div id="map"></div>
-            <div class="map-button liquid-glass">
-                    <span>Ações</span>
 
-                    <div class="action-grid hide-action-grid" id="grid-action">
-                    <button class="action-btn btn-primary"  onclick="toggleAddMode()" title="Adicionar">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                    <button class="action-btn btn-warning"  onclick="toggleConnectMode()" title="Conectar">
-                        <i class="fas fa-link"></i>
-                    </button>
-                    <button class="action-btn btn-danger"  onclick="toggleRemoveMode()" title="Remover">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button class="action-btn btn-danger"  onclick="toggleDisconnectMode()" title="Desconectar">
-                        <i class="fas fa-unlink"></i>
-                    </button>
-                </div>
+            <div class="grid-container">
+                            <div class="action-grid hide-action-grid" id="grid-action">
+                                    <button class="action-btn btn-primary"  onclick="toggleAddMode()" title="Adicionar">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                    <button class="action-btn btn-warning"  onclick="toggleConnectMode()" title="Conectar">
+                                        <i class="fas fa-link"></i>
+                                    </button>
+                                    <button class="action-btn btn-danger"  onclick="toggleRemoveMode()" title="Remover">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button class="action-btn btn-danger"  onclick="toggleDisconnectMode()" title="Desconectar">
+                                        <i class="fas fa-unlink"></i>
+                                    </button>
+                            </div>
 
-                <div class="map-button-command">
+                            <div class="map-button liquid-glass">
 
-                    <button class="layer-toggle-btn" id="layerToggleBtn" title="Alternar Mapa">
-                        <i class="fas fa-globe"></i> 
-                        <!-- <span>Satélite</span> -->
-                    </button>
+                                <div class="map-button-command">
 
-                    <div class="mode-indicator" id="modeIndicator" onclick="controller.view.toggleClassesFromIdExact('grid-action', 'hide-action-grid', 'show-action-grid');">
-                        <i class="fas fa-mouse-pointer"></i>
-                    </div>
-                    
-                    <button class="layer-toggle-btn" id="gpsBtn" class="btn">
-                        <i class="fas fa-location-crosshairs"></i> 
-                        <!-- Rastrear GPS -->
-                    </button>
+                                    <button class="layer-toggle-btn" id="layerToggleBtn" title="Alternar Mapa">
+                                        <i class="fas fa-globe"></i> 
+                                        <!-- <span>Satélite</span> -->
+                                    </button>
 
-                </div>
+                                    <div class="mode-indicator" id="modeIndicator" onclick="controller.view.toggleClassesFromIdExact('grid-action', 'hide-action-grid', 'show-action-grid');">
+                                        <i class="fas fa-cube"></i>
+                                    </div>
+                                    
+                                    <button class="layer-toggle-btn" id="gpsBtn" class="btn">
+                                        <i class="fas fa-location-crosshairs"></i> 
+                                        <!-- Rastrear GPS -->
+                                    </button>
+
+                                </div>
+
+                                                        
+                                <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()">
+                                    <i class="fas fa-bars"></i>
+                                </button>
+
+                            </div>
             </div>
         </div>
     </div>
-
-    <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleSidebar()">
-        <i class="fas fa-bars"></i>
-    </button>
 
     <div class="toast" id="toast"></div>
 
