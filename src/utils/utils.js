@@ -16,7 +16,16 @@ function createPopupContent(point) {
         <div style="font-family: Inter, sans-serif; min-width: 200px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <h3 style="margin: 0; color: #3B82F6; font-size: 16px; font-weight: 700;">${point.name}</h3>
-                <div style="display: flex; gap: 12px;">
+                <div style="    
+                display: flex;
+                gap: 1rem;
+                flex-direction: column;
+                position: absolute;
+                right: 1rem;
+                top: 50%;
+                transform: translate(0%, -50%);
+                font-size: 1.3rem;
+                ">
                     <i class="fas fa-edit" style="color: #F59E0B; cursor: default; z-index: 1100;" onclick="editPoint(${point.id})"></i>
                     <i class="fas fa-trash" style="color: var(--danger); cursor: default; z-index: 1100;" onclick="deletePoint(${point.id})"></i>
                 </div>

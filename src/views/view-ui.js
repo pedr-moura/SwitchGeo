@@ -1,4 +1,5 @@
 import { showToast } from '../utils/utils.js';
+import { createPopupContent } from '../utils/utils.js';
 
 export function initUIElements() {
     // Cache elements
