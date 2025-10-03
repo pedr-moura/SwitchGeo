@@ -1,4 +1,4 @@
-import * as L from 'https://unpkg.com/leaflet@1.9.4/dist/leaflet-src.esm.js';
+
 
 export function setMode(mode) {
     this.view.resetHandlers();
@@ -27,6 +27,15 @@ export function setupModeHandlers() {
             point.marker.on('click', point.selectHandler);
         }
     });
+
+    switch (this.model.currentMode) {
+        case 'draw':
+            this.view.enableDrawing();
+            break;
+        default:
+            this.view.disableDrawing();
+            break;
+    }
 }
 
 export function toggleAddMode() {
@@ -40,7 +49,6 @@ export function toggleRemoveMode() {
 export function toggleConnectMode() {
     const oldMode = this.model.currentMode;
     this.setMode(oldMode === 'connect' ? 'normal' : 'connect');
-    console.log(this.model.currentMode);
     
     if (this.model.currentMode == 'disconnect') {
         this.deselectAll();
@@ -50,8 +58,11 @@ export function toggleConnectMode() {
 export function toggleDisconnectMode() {
     const oldMode = this.model.currentMode;
     this.setMode(oldMode === 'disconnect' ? 'normal' : 'disconnect');
-    console.log(this.model.currentMode);
     if (oldMode !== 'disconnect') {
         this.deselectAll();
     }
+}
+
+export function toggleDrawMode() {
+    this.setMode(this.model.currentMode === 'draw' ? 'normal' : 'draw');
 }

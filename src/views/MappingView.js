@@ -2,6 +2,7 @@ import { initMap, renderPoint, renderConnection, updateMarkerIcon, removeMarker,
 import { initUIElements, filterTable, updatePointList, updateTable, updateStats, updateSelectionControls, updatePreviews, updateModeIndicator, updatePointPopup, updateMarkerPosition, focusOnPoint } from './view-ui.js';
 import { toggleGPS, onLocationFound, onLocationError } from './view-gps.js';
 import { toggleClassesFromIdExact, addClassId, removeClassId } from './view-handlers.js';
+import { enableDrawing, disableDrawing } from './view-drawing.js';
 
 class MappingView {
     constructor(model) {
@@ -12,6 +13,7 @@ class MappingView {
         this.locationMarker = null;
         this.accuracyCircle = null;
         this.isLocating = false;
+        this.drawControl = null;
 
         initMap.call(this);
         initUIElements.call(this);
@@ -114,6 +116,14 @@ class MappingView {
 
     onLocationError(e) {
         onLocationError.call(this, e);
+    }
+
+    enableDrawing() {
+        enableDrawing.call(this);
+    }
+
+    disableDrawing() {
+        disableDrawing.call(this);
     }
 }
 

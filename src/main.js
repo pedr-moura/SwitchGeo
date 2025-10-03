@@ -14,11 +14,13 @@ function init() {
         model = new MappingModel();
         view = new MappingView(model);
         controller = new MappingController(model, view);
+        window.controller = controller; // Para togglePointSelectionFromList
 
         window.toggleAddMode = controller.toggleAddMode.bind(controller);
         window.toggleRemoveMode = controller.toggleRemoveMode.bind(controller);
         window.toggleConnectMode = controller.toggleConnectMode.bind(controller);
         window.toggleDisconnectMode = controller.toggleDisconnectMode.bind(controller);
+        window.toggleDrawMode = controller.toggleDrawMode.bind(controller);
         window.exportData = controller.exportData.bind(controller);
         window.importData = controller.importData.bind(controller);
         window.switchTab = controller.switchTab.bind(controller);
@@ -44,13 +46,18 @@ function init() {
         }
 
         controller.updateAllViews();
+        controller.initDrawing();
         showToast('Sistema inicializado!', 'success');
 
         window.editPoint = controller.editPoint.bind(controller);
         window.deletePoint = controller.deletePoint.bind(controller);
         window.saveEdit = controller.saveEdit.bind(controller);
         window.cancelEdit = controller.cancelEdit.bind(controller);
-        window.controller = controller; // Para togglePointSelectionFromList
+
+        window.clearAllData = () => {
+            controller.clearAllData();
+            location.reload();
+        };
     } catch (error) {
         console.error('Erro na inicialização:', error);
         showToast('Erro ao inicializar', 'error');
