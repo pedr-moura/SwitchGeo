@@ -8,7 +8,7 @@ import { addPoint, deletePoint, editPoint, saveEdit, cancelEdit, editNewPoint } 
 import { connectSelectedPoints, disconnectSelectedPoints, deselectAll, togglePointSelection, togglePointSelectionFromList } from './controller-connections.js';
 import { switchTab, toggleSidebar, updateAllViews } from './controller-ui.js';
 import { toggleGPS } from './controller-gps.js';
-import { toggleDrawMode, initDrawing } from './controller-drawing.js';
+import { toggleDrawMode, startDrawing, stopDrawing, onDrawStart, onDrawing, onDrawEnd } from './controller-drawing.js';
 
 class MappingController {
     constructor(model, view) {
@@ -89,12 +89,28 @@ class MappingController {
         toggleDisconnectMode.call(this);
     }
 
-    toggleDrawMode() {
-        toggleDrawMode.call(this);
+    toggleDrawMode(shape) {
+        toggleDrawMode.call(this, shape);
     }
 
-    initDrawing() {
-        initDrawing.call(this, this.view.map);
+    startDrawing(shape) {
+        startDrawing.call(this, shape);
+    }
+
+    stopDrawing() {
+        stopDrawing.call(this);
+    }
+
+    onDrawStart(shape, e) {
+        onDrawStart.call(this, shape, e);
+    }
+
+    onDrawing(shape, startLatLng, e) {
+        onDrawing.call(this, shape, startLatLng, e);
+    }
+
+    onDrawEnd(shape, startLatLng, e) {
+        onDrawEnd.call(this, shape, startLatLng, e);
     }
 
     updatePointFromTable(cell) {

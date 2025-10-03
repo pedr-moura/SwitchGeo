@@ -20,7 +20,7 @@ function init() {
         window.toggleRemoveMode = controller.toggleRemoveMode.bind(controller);
         window.toggleConnectMode = controller.toggleConnectMode.bind(controller);
         window.toggleDisconnectMode = controller.toggleDisconnectMode.bind(controller);
-        window.toggleDrawMode = controller.toggleDrawMode.bind(controller);
+        window.toggleDrawMode = (shape) => controller.toggleDrawMode(shape);
         window.exportData = controller.exportData.bind(controller);
         window.importData = controller.importData.bind(controller);
         window.switchTab = controller.switchTab.bind(controller);
@@ -41,12 +41,16 @@ function init() {
             view.renderConnection(conn);
         });
 
+        model.drawings.forEach(drawing => {
+            view.renderDrawing(drawing);
+        });
+
         if (Object.keys(model.points).length > 0) {
             view.fitBounds();
         }
 
         controller.updateAllViews();
-        controller.initDrawing();
+
         showToast('Sistema inicializado!', 'success');
 
         window.editPoint = controller.editPoint.bind(controller);

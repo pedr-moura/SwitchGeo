@@ -53,7 +53,9 @@ export function updatePointFromTable(cell) {
 
 export function exportData() {
     try {
-        let csv = 'ID,Nome,Latitude,Longitude,Descrição,Conexões\n';
+        let csv = 'ID,Type,Name,Data,Connections\n';
+
+        // Export Points
         Object.values(this.model.points).forEach(point => {
             const pointConnections = this.model.connections
                 .filter(conn => conn.from === point.id || conn.to === point.id)
@@ -61,10 +63,19 @@ export function exportData() {
                 .join(';');
             
             const escapedName = `"${point.name.replace(/"/g, '""')}"`;
-            const escapedDesc = `"${point.description.replace(/"/g, '""')}"`;
+            const data = `"${point.lat},${point.lng},${point.description.replace(/"/g, '""')}"`;
             const escapedConns = `"${pointConnections}"`;
             
-            csv += `"${point.id}",${escapedName},"${point.lat}","${point.lng}",${escapedDesc},${escapedConns}\n`;
+            csv += `"${point.id}","Point",${escapedName},${data},${escapedConns}\n`;
+        });
+
+        // Export Drawings
+        this.model.drawings.forEach(drawing => {
+            let data = '';
+            if (drawing.type === 'rectangle') {
+                data = `"${drawing.bounds[0].lat},${drawing.bounds[0].lng},${drawing.bounds[1].lat},${drawing.bounds[1].lng}"`;
+            }
+            csv += `"${drawing.id}","${drawing.type}","",${data},""\n`;
         });
 
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -105,19 +116,24 @@ export function importData(event) {
             this.model.clearAllData();
             Object.values(this.model.points).forEach(point => this.view.removeMarker(point.id));
             this.model.connections.forEach(conn => this.view.removePolyline(conn));
+            this.model.drawings.forEach(drawing => this.view.removeDrawing(drawing));
 
             let importedPoints = 0;
+            let importedDrawings = 0;
             let importedConnections = 0;
 
-            // Primeiro pass: adicionar pontos
+            // Primeiro pass: adicionar pontos e desenhos
             for (let i = 1; i < lines.length; i++) {
                 const values = parseCSVLine(lines[i]);
-                if (values.length >= 5) {
-                    const id = parseInt(values[0]);
-                    const name = values[1];
-                    const lat = parseFloat(values[2]);
-                    const lng = parseFloat(values[3]);
-                    const description = values[4];
+                const id = parseInt(values[0]);
+                const type = values[1];
+                const name = values[2];
+                const data = values[3].split(',');
+
+                if (type === 'Point') {
+                    const lat = parseFloat(data[0]);
+                    const lng = parseFloat(data[1]);
+                    const description = data.slice(2).join(',');
 
                     if (!isNaN(lat) && !isNaN(lng) && Math.abs(lat) <= 90 && Math.abs(lng) <= 180) {
                         const point = this.model.addPoint(lat, lng, name, description);
@@ -126,15 +142,22 @@ export function importData(event) {
                         this.view.renderPoint(point);
                         importedPoints++;
                     }
+                } else if (type === 'rectangle') {
+                    const bounds = [[parseFloat(data[0]), parseFloat(data[1])], [parseFloat(data[2]), parseFloat(data[3])]];
+                    const drawing = this.model.addDrawing({ type: 'rectangle', bounds });
+                    drawing.id = id;
+                    this.model.drawingIdCounter = Math.max(this.model.drawingIdCounter, id + 1);
+                    this.view.renderDrawing(drawing);
+                    importedDrawings++;
                 }
             }
 
             // Segundo pass: adicionar conexões
             for (let i = 1; i < lines.length; i++) {
                 const values = parseCSVLine(lines[i]);
-                if (values.length >= 6) {
+                if (values[1] === 'Point') {
                     const id = parseInt(values[0]);
-                    const connectionIds = values[5].split(';').filter(connId => connId.trim()).map(Number);
+                    const connectionIds = values[4].split(';').filter(connId => connId.trim()).map(Number);
 
                     connectionIds.forEach(connId => {
                         if (this.model.points[id] && this.model.points[connId]) {
@@ -150,7 +173,7 @@ export function importData(event) {
 
             this.updateAllViews();
             this.view.fitBounds();
-            showToast(`Importado! ${importedPoints} pontos, ${importedConnections} conexões`, 'success');
+            showToast(`Importado! ${importedPoints} pontos, ${importedDrawings} desenhos, ${importedConnections} conexões`, 'success');
         };
         reader.readAsText(file, 'utf-8');
     } catch (error) {

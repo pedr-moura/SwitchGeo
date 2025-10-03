@@ -2,9 +2,11 @@ class MappingModel {
     constructor() {
         this.points = {};
         this.connections = [];
+        this.drawings = [];
         this.selectedPoints = [];
         this.currentMode = 'normal';
         this.pointIdCounter = 1;
+        this.drawingIdCounter = 1;
         this.loadData();
     }
 
@@ -27,6 +29,17 @@ class MappingModel {
         } catch (error) {
             console.error('Error adding point:', error);
             showToast('Erro ao adicionar ponto', 'error');
+        }
+    }
+
+    addDrawing(drawing) {
+        try {
+            drawing.id = this.drawingIdCounter++;
+            this.drawings.push(drawing);
+            this.saveData();
+            return drawing;
+        } catch (error) {
+            console.error('Error adding drawing:', error);
         }
     }
 
@@ -119,10 +132,17 @@ class MappingModel {
                 }])
             );
             const serializableConnections = this.connections.map(c => ({ from: c.from, to: c.to }));
+            const serializableDrawings = this.drawings.map(d => {
+                const drawing = { ...d };
+                delete drawing.layer;
+                return drawing;
+            });
 
             localStorage.setItem('mapping_points', JSON.stringify(serializablePoints));
             localStorage.setItem('mapping_connections', JSON.stringify(serializableConnections));
+            localStorage.setItem('mapping_drawings', JSON.stringify(serializableDrawings));
             localStorage.setItem('mapping_pointIdCounter', this.pointIdCounter.toString());
+            localStorage.setItem('mapping_drawingIdCounter', this.drawingIdCounter.toString());
         } catch (error) {
             console.error('Error saving data:', error);
         }
@@ -132,9 +152,11 @@ class MappingModel {
         try {
             const savedPoints = JSON.parse(localStorage.getItem('mapping_points'));
             const savedConnections = JSON.parse(localStorage.getItem('mapping_connections'));
-            const savedCounter = localStorage.getItem('mapping_pointIdCounter');
+            const savedDrawings = JSON.parse(localStorage.getItem('mapping_drawings'));
+            const savedPointCounter = localStorage.getItem('mapping_pointIdCounter');
+            const savedDrawingCounter = localStorage.getItem('mapping_drawingIdCounter');
 
-            if (savedPoints && savedConnections && savedCounter) {
+            if (savedPoints) {
                 this.points = Object.fromEntries(
                     Object.entries(savedPoints).map(([id, p]) => [id, {
                         ...p,
@@ -144,8 +166,18 @@ class MappingModel {
                         removeHandler: null
                     }])
                 );
+            }
+            if (savedConnections) {
                 this.connections = savedConnections.map(c => ({ ...c, polyline: null }));
-                this.pointIdCounter = parseInt(savedCounter, 10);
+            }
+            if (savedDrawings) {
+                this.drawings = savedDrawings.map(d => ({ ...d, layer: null }));
+            }
+            if (savedPointCounter) {
+                this.pointIdCounter = parseInt(savedPointCounter, 10);
+            }
+            if (savedDrawingCounter) {
+                this.drawingIdCounter = parseInt(savedDrawingCounter, 10);
             }
         } catch (error) {
             console.error('Error loading data:', error);
@@ -155,8 +187,10 @@ class MappingModel {
     clearAllData() {
         this.points = {};
         this.connections = [];
+        this.drawings = [];
         this.selectedPoints = [];
         this.pointIdCounter = 1;
+        this.drawingIdCounter = 1;
         this.saveData();
     }
 }

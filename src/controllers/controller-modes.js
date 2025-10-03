@@ -29,11 +29,12 @@ export function setupModeHandlers() {
     });
 
     switch (this.model.currentMode) {
-        case 'draw':
-            this.view.enableDrawing();
+        case 'draw-rectangle':
+            this.startDrawing('rectangle');
             break;
+
         default:
-            this.view.disableDrawing();
+            this.stopDrawing();
             break;
     }
 }
@@ -61,8 +62,4 @@ export function toggleDisconnectMode() {
     if (oldMode !== 'disconnect') {
         this.deselectAll();
     }
-}
-
-export function toggleDrawMode() {
-    this.setMode(this.model.currentMode === 'draw' ? 'normal' : 'draw');
 }

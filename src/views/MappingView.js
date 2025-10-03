@@ -2,7 +2,7 @@ import { initMap, renderPoint, renderConnection, updateMarkerIcon, removeMarker,
 import { initUIElements, filterTable, updatePointList, updateTable, updateStats, updateSelectionControls, updatePreviews, updateModeIndicator, updatePointPopup, updateMarkerPosition, focusOnPoint } from './view-ui.js';
 import { toggleGPS, onLocationFound, onLocationError } from './view-gps.js';
 import { toggleClassesFromIdExact, addClassId, removeClassId } from './view-handlers.js';
-import { enableDrawing, disableDrawing } from './view-drawing.js';
+import { renderDrawing, removeDrawing, updateDrawing, clearTempDrawing } from './view-drawing.js';
 
 class MappingView {
     constructor(model) {
@@ -118,12 +118,20 @@ class MappingView {
         onLocationError.call(this, e);
     }
 
-    enableDrawing() {
-        enableDrawing.call(this);
+    renderDrawing(drawing) {
+        renderDrawing.call(this, drawing);
     }
 
-    disableDrawing() {
-        disableDrawing.call(this);
+    removeDrawing(drawing) {
+        removeDrawing.call(this, drawing);
+    }
+
+    updateDrawing(shape, startLatLng, endLatLng) {
+        updateDrawing.call(this, shape, startLatLng, endLatLng);
+    }
+
+    clearTempDrawing() {
+        clearTempDrawing.call(this);
     }
 }
 
