@@ -54,6 +54,7 @@ export function renderConnection(conn) {
     try {
         const fromPoint = this.model.points[conn.from];
         const toPoint = this.model.points[conn.to];
+        console.log('Rendering connection:', { fromPoint, toPoint, conn });
         if (!fromPoint || !toPoint) return;
 
         conn.polyline = L.polyline([

@@ -48,9 +48,9 @@ export function connectSelectedPoints() {
         for (let j = i + 1; j < this.model.selectedPoints.length; j++) {
             const from = this.model.selectedPoints[i];
             const to = this.model.selectedPoints[j];
-            if (this.model.createConnection(from, to)) {
-                const conn = this.model.connections.find(c => (c.from === from && c.to === to) || (c.from === to && c.to === from));
-                this.view.renderConnection(conn);
+            const newConnection = this.model.createConnection(from, to);
+            if (newConnection) {
+                this.view.renderConnection(newConnection);
                 connectionsAdded++;
             }
         }

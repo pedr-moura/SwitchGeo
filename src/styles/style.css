@@ -253,11 +253,11 @@
 
         .action-grid {
             position: relative;
-            display: flex;
+            display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 0.75rem;
             z-index: 1100;
-            bottom: 2rem;
+            bottom: 6rem;
             left: 50%;
             transform: translate(-50%,-50%);
             flex-wrap: wrap;
@@ -918,7 +918,7 @@
             }
 
             .action-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
             }
 
             .stats-grid {
@@ -972,6 +972,10 @@
     display: flex;
     gap: 0.5rem;
     align-items: center;
+    position: absolute;
+    bottom: 7rem;
+    left: 50%;
+    transform: translate(-50%, 0px);
 }
 
 .color-box {

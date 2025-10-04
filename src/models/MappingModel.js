@@ -78,21 +78,22 @@ class MappingModel {
 
     createConnection(fromId, toId) {
         try {
-            if (!this.points[fromId] || !this.points[toId]) return false;
+            if (!this.points[fromId] || !this.points[toId]) return null;
 
             const exists = this.connections.some(conn =>
                 (conn.from === fromId && conn.to === toId) || (conn.from === toId && conn.to === fromId)
             );
 
             if (!exists) {
-                this.connections.push({ from: fromId, to: toId, polyline: null }); // polyline setado pela View
+                const newConnection = { from: fromId, to: toId, polyline: null };
+                this.connections.push(newConnection);
                 this.saveData();
-                return true;
+                return newConnection;
             }
-            return false;
+            return null;
         } catch (error) {
             console.error('Error creating connection:', error);
-            return false;
+            return null;
         }
     }
 
