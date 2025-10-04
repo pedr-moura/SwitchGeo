@@ -253,13 +253,15 @@
 
         .action-grid {
             position: relative;
-            display: grid;
+            display: flex;
             grid-template-columns: repeat(4, 1fr);
             gap: 0.75rem;
             z-index: 1100;
             bottom: 2rem;
             left: 50%;
             transform: translate(-50%,-50%);
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .action-btn {
@@ -957,6 +959,37 @@
             z-index: 1100;
             }
         }
+
+.color-palette-container.hidden {
+    display: none;
+}
+
+.color-palette-container.visible {
+    display: block;
+}
+
+.color-palette {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.color-box {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    border: 2px solid var(--glass-border);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.color-box:hover {
+    transform: scale(1.1);
+}
+
+.color-box.selected {
+    border-color: var(--primary);
+}
 
         .grid-container{
             position: absolute;
