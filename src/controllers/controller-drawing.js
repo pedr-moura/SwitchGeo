@@ -21,7 +21,7 @@ export function onDrawStart(shape, e) {
 }
 
 export function onDrawing(shape, startLatLng, e) {
-    this.view.updateDrawing(shape, startLatLng, e.latlng);
+    this.view.updateDrawing({ shape, bounds: [startLatLng, e.latlng] });
 }
 
 export function onDrawEnd(shape, startLatLng, e) {
@@ -31,8 +31,8 @@ export function onDrawEnd(shape, startLatLng, e) {
     let drawing;
 
     if (shape === 'rectangle') {
-        const bounds = [startLatLng, endLatLng];
-        drawing = { type: 'rectangle', bounds };
+        const bounds = [[startLatLng.lat, startLatLng.lng], [endLatLng.lat, endLatLng.lng]];
+        drawing = { type: 'rectangle', bounds, color: this.currentColor };
     }
 
     if (drawing) {

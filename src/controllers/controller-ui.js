@@ -18,3 +18,9 @@ export function updateAllViews() {
     this.view.updateSelectionControls();
     this.view.updatePreviews();
 }
+
+export function toggleColorPalette() {
+    const colorPalette = document.getElementById('color-palette-container');
+    colorPalette.classList.toggle('hidden');
+    colorPalette.classList.toggle('visible');
+}

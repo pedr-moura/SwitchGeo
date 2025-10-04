@@ -53,7 +53,7 @@ export function updatePointFromTable(cell) {
 
 export function exportData() {
     try {
-        let csv = 'ID,Type,Name,Data,Connections\n';
+        let csv = 'ID,Type,Name,Data,Connections,Color\n';
 
         // Export Points
         Object.values(this.model.points).forEach(point => {
@@ -66,16 +66,16 @@ export function exportData() {
             const data = `"${point.lat},${point.lng},${point.description.replace(/"/g, '""')}"`;
             const escapedConns = `"${pointConnections}"`;
             
-            csv += `"${point.id}","Point",${escapedName},${data},${escapedConns}\n`;
+            csv += `"${point.id}","Point",${escapedName},${data},${escapedConns},""\n`;
         });
 
         // Export Drawings
         this.model.drawings.forEach(drawing => {
             let data = '';
             if (drawing.type === 'rectangle') {
-                data = `"${drawing.bounds[0].lat},${drawing.bounds[0].lng},${drawing.bounds[1].lat},${drawing.bounds[1].lng}"`;
+                data = `"${drawing.bounds[0][0]},${drawing.bounds[0][1]},${drawing.bounds[1][0]},${drawing.bounds[1][1]}"`;
             }
-            csv += `"${drawing.id}","${drawing.type}","",${data},""\n`;
+            csv += `"${drawing.id}","${drawing.type}","",${data},"",${drawing.color}\n`;
         });
 
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -129,6 +129,7 @@ export function importData(event) {
                 const type = values[1];
                 const name = values[2];
                 const data = values[3].split(',');
+                const color = values[5];
 
                 if (type === 'Point') {
                     const lat = parseFloat(data[0]);
@@ -144,7 +145,7 @@ export function importData(event) {
                     }
                 } else if (type === 'rectangle') {
                     const bounds = [[parseFloat(data[0]), parseFloat(data[1])], [parseFloat(data[2]), parseFloat(data[3])]];
-                    const drawing = this.model.addDrawing({ type: 'rectangle', bounds });
+                    const drawing = this.model.addDrawing({ type: 'rectangle', bounds, color });
                     drawing.id = id;
                     this.model.drawingIdCounter = Math.max(this.model.drawingIdCounter, id + 1);
                     this.view.renderDrawing(drawing);

@@ -21,10 +21,13 @@ function init() {
         window.toggleConnectMode = controller.toggleConnectMode.bind(controller);
         window.toggleDisconnectMode = controller.toggleDisconnectMode.bind(controller);
         window.toggleDrawMode = (shape) => controller.toggleDrawMode(shape);
+        window.toggleColorPalette = controller.toggleColorPalette.bind(controller);
+        window.toggleDrawMode = (shape) => controller.toggleDrawMode(shape);
         window.exportData = controller.exportData.bind(controller);
         window.importData = controller.importData.bind(controller);
         window.switchTab = controller.switchTab.bind(controller);
         window.toggleSidebar = controller.toggleSidebar.bind(controller);
+        window.setCurrentColor = (color) => controller.setCurrentColor(color);
         window.clearSelection = () => {
             controller.model.clearSelection();
             controller.model.selectedPoints.forEach(id => {

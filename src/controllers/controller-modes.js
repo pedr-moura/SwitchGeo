@@ -7,6 +7,12 @@ export function setMode(mode) {
     this.setupModeHandlers();
     this.view.updateSelectionControls();
     this.view.updatePreviews();
+
+    if (mode !== 'draw-rectangle') {
+        const colorPalette = document.getElementById('color-palette-container');
+        colorPalette.classList.add('hidden');
+        colorPalette.classList.remove('visible');
+    }
 }
 
 export function setupModeHandlers() {
@@ -32,6 +38,7 @@ export function setupModeHandlers() {
         case 'draw-rectangle':
             this.startDrawing('rectangle');
             break;
+
 
         default:
             this.stopDrawing();

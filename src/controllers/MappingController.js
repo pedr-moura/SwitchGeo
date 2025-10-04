@@ -6,7 +6,7 @@ import { toggleAddMode, toggleRemoveMode, toggleConnectMode, toggleDisconnectMod
 import { exportData, importData, updatePointFromTable, clearAllData } from './controller-data.js';
 import { addPoint, deletePoint, editPoint, saveEdit, cancelEdit, editNewPoint } from './controller-points.js';
 import { connectSelectedPoints, disconnectSelectedPoints, deselectAll, togglePointSelection, togglePointSelectionFromList } from './controller-connections.js';
-import { switchTab, toggleSidebar, updateAllViews } from './controller-ui.js';
+import { switchTab, toggleSidebar, updateAllViews, toggleColorPalette } from './controller-ui.js';
 import { toggleGPS } from './controller-gps.js';
 import { toggleDrawMode, startDrawing, stopDrawing, onDrawStart, onDrawing, onDrawEnd } from './controller-drawing.js';
 
@@ -14,7 +14,16 @@ class MappingController {
     constructor(model, view) {
         this.model = model;
         this.view = view;
+        this.currentColor = '#ff7800'; // Default color
+        this.tempPolyline = null;
+        this.tempLayer = null;
         this.initHandlers();
+    }
+
+    setCurrentColor(color) {
+        this.currentColor = color;
+        this.toggleDrawMode('rectangle');
+        // Optional: update UI to show selected color
     }
 
     deselectAll() {
@@ -147,6 +156,10 @@ class MappingController {
 
     updateAllViews() {
         updateAllViews.call(this);
+    }
+
+    toggleColorPalette() {
+        toggleColorPalette.call(this);
     }
 
     toggleGPS() {

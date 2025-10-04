@@ -1,20 +1,19 @@
 let tempLayer = null;
 
-export function updateDrawing(shape, startLatLng, endLatLng) {
+export function updateDrawing(options) {
     if (tempLayer) {
         this.map.removeLayer(tempLayer);
     }
 
-    if (shape === 'rectangle') {
-        const bounds = [startLatLng, endLatLng];
-        tempLayer = L.rectangle(bounds, { color: "#ff7800", weight: 1 }).addTo(this.map);
+    if (options.shape === 'rectangle') {
+        tempLayer = L.rectangle(options.bounds, { color: "#ff7800", weight: 1 }).addTo(this.map);
     }
 }
 
 export function renderDrawing(drawing) {
     let layer;
     if (drawing.type === 'rectangle') {
-        layer = L.rectangle(drawing.bounds, { color: "#ff7800", weight: 1 });
+        layer = L.rectangle(drawing.bounds, { color: drawing.color || "#ff7800", weight: 1 });
     }
 
     if (layer) {

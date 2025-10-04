@@ -161,9 +161,18 @@
                                         <i class="fas fa-unlink"></i>
                                     </button>
 
-                                    <button class="action-btn btn-primary" id="draw-rectangle-btn" title="Desenhar Retângulo" onclick="toggleDrawMode('rectangle')">
+                                    <button class="action-btn btn-primary" id="draw-rectangle-btn" title="Desenhar Retângulo" onclick="toggleColorPalette()">
                                         <i class="fas fa-vector-square"></i>
                                     </button>
+
+                                    <div id="color-palette-container" class="color-palette-container hidden">
+                                        <div class="color-palette">
+                                            <button class="color-box" style="background-color: #ff7800;" onclick="setCurrentColor('#ff7800')"></button>
+                                            <button class="color-box" style="background-color: #ff0000;" onclick="setCurrentColor('#ff0000')"></button>
+                                            <button class="color-box" style="background-color: #00ff00;" onclick="setCurrentColor('#00ff00')"></button>
+                                            <button class="color-box" style="background-color: #0000ff;" onclick="setCurrentColor('#0000ff')"></button>
+                                        </div>
+                                    </div>
 
                             </div>
 
